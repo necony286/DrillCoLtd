@@ -8,10 +8,8 @@ dist/
 # SSH keys
 deploy_key
 deploy_key.pub
-deploy_key_nopass
-deploy_key_nopass.pub
 *.pem
-*.key
+*.ppk
 
 # Logs
 npm-debug.log*
