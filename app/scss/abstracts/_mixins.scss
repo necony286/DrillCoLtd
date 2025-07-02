@@ -1,0 +1,115 @@
+// Scss mixins
+
+// MEDIA QUERY MANAGER
+/*
+0 - 575.98px:         Extra small devices (portrait phones, less than 576px)
+575.98 - 767.98px:    Small devices (landscape phones, less than 768px)
+767.98 - 991.98px:    Medium devices (tablets, less than 992px)
+991.98 - 1199.98px:   Large devices (desktops, less than 1200px)
+[1199.98 - 1800px]:   is where our normal styles apply
+1800px + :            Extra large devices (large desktops)
+
+$breakpoint arguement choices:
+- phone-port
+- phone-land
+- tab-port
+- tab-land
+- desktop-big
+
+1em = 16px
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone-port {
+    @media only screen and (max-width: 35.99875em) {
+      @content;
+    } //575.98px
+  }
+  @if $breakpoint == phone-land {
+    @media only screen and (max-width: 47.99875em) {
+      @content;
+    } //767.98px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 61.99875em) {
+      @content;
+    } //991.98px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 74.99875em) {
+      @content;
+    } //1199.98px
+  }
+  @if $breakpoint == desktop-big {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    } //1800
+  }
+}
+/*
+  EXAMPLE
+  
+  .example {
+    @include respond(phone-port) {
+      rule: value; (background: white;)
+   }
+  }
+  
+  @include respond(desktop-big) {
+     rule: value; (background: black;)
+  }
+  } 
+  */
+
+//RESPONSIVE TEXT - FLUID TEXT
+// $min-vw: 575.98px; // Screen min
+// $max-vw: 1800px; // Screen max
+
+// @function strip-unit($value) {
+//   @return $value / ($value * 0 + 1);
+// }
+
+// @mixin fluid-font($min-font-size, $max-font-size) {
+//   font-size: $min-font-size;
+
+//   @media screen and (min-width: $min-vw) {
+//     font-size: calc(
+//       #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+//         ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+//     );
+//   }
+
+//   @media screen and (min-width: $max-vw) {
+//     font-size: $max-font-size;
+//   }
+// }
+/*
+  EXAMPLE
+  
+  .example {
+    @include fluid-font(20px, 48px);
+  } 
+  */
+
+// TYPO MIXINS (use in typography.scss)
+// @mixin heading-typo {
+//   font-family: _font(heading, font-family);
+//   font-weight: _font(heading, weight);
+//   color: _palette(typo, heading);
+// }
+
+// @mixin text-typo {
+//   font-family: _font(text, font-family);
+//   font-weight: _font(text, weight);
+//   color: _palette(typo, text);
+// }
+/*
+  EXAMPLE
+  
+  .heading {
+    @include heading-typo;
+  }
+  
+  .text {
+    @include text-typo;
+  }
+  */
