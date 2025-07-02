@@ -1,1 +1,0 @@
-const door = 0;
