@@ -15,6 +15,7 @@ const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
 const htmlmin = require("gulp-htmlmin");
+const purgecss = require("gulp-purgecss");
 
 const fs = require("fs");
 const path = require("path");
@@ -81,7 +82,13 @@ const styles = () =>
     .src(paths.styles.src)
     .pipe(plumber({ errorHandler }))
     .pipe(sourcemaps.init())
-    .pipe(sass())
+    .pipe(sass()) // compile SCSS to CSS
+    .pipe(
+      purgecss({
+        content: ["./app/**/*.html", "./app/js/**/*.js"],
+        safelist: ["cb"], // adjust this if you use dynamic or JS-generated classes
+      })
+    )
     .pipe(postcss([autoprefixer(), cssnano()]))
     .pipe(rename({ basename: "styles", suffix: ".min" }))
     .pipe(sourcemaps.write("."))
