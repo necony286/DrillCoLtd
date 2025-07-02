@@ -51,7 +51,10 @@ const paths = {
   },
 };
 
-const errorHandler = notify.onError("❌ Gulp Error: <%= error.message %>");
+const errorHandler = function (err) {
+  console.error("❌ Gulp Error:", err.message);
+  this.emit("end");
+};
 
 // ✅ Native clean task (no del needed)
 const clean = (done) => {

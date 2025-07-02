@@ -61,27 +61,27 @@ $breakpoint arguement choices:
   */
 
 //RESPONSIVE TEXT - FLUID TEXT
-// $min-vw: 575.98px; // Screen min
-// $max-vw: 1800px; // Screen max
+$min-vw: 575.98px; // Screen min
+$max-vw: 1800px; // Screen max
 
-// @function strip-unit($value) {
-//   @return $value / ($value * 0 + 1);
-// }
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
 
-// @mixin fluid-font($min-font-size, $max-font-size) {
-//   font-size: $min-font-size;
+@mixin fluid-font($min-font-size, $max-font-size) {
+  font-size: $min-font-size;
 
-//   @media screen and (min-width: $min-vw) {
-//     font-size: calc(
-//       #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
-//         ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
-//     );
-//   }
+  @media screen and (min-width: $min-vw) {
+    font-size: calc(
+      #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+        ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+    );
+  }
 
-//   @media screen and (min-width: $max-vw) {
-//     font-size: $max-font-size;
-//   }
-// }
+  @media screen and (min-width: $max-vw) {
+    font-size: $max-font-size;
+  }
+}
 /*
   EXAMPLE
   
@@ -91,17 +91,17 @@ $breakpoint arguement choices:
   */
 
 // TYPO MIXINS (use in typography.scss)
-// @mixin heading-typo {
-//   font-family: _font(heading, font-family);
-//   font-weight: _font(heading, weight);
-//   color: _palette(typo, heading);
-// }
+@mixin heading-typo {
+  font-family: _font(heading, font-family);
+  font-weight: _font(heading, weight);
+  color: _palette(typo, heading);
+}
 
-// @mixin text-typo {
-//   font-family: _font(text, font-family);
-//   font-weight: _font(text, weight);
-//   color: _palette(typo, text);
-// }
+@mixin text-typo {
+  font-family: _font(text, font-family);
+  font-weight: _font(text, weight);
+  color: _palette(typo, text);
+}
 /*
   EXAMPLE
   
