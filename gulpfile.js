@@ -144,7 +144,16 @@ const finalNotify = (done) => {
 
 const build = gulp.series(
   clean,
-  gulp.parallel(styles, vendors, scripts, images, webpImages, fonts, favicon),
+  gulp.parallel(
+    html,
+    styles,
+    vendors,
+    scripts,
+    images,
+    webpImages,
+    fonts,
+    favicon
+  ),
   cacheBust,
   finalNotify
 );
