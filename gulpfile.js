@@ -15,48 +15,32 @@ const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify");
 const htmlmin = require("gulp-htmlmin");
-const purgecss = require("gulp-purgecss");
 
 const fs = require("fs");
 const path = require("path");
 
 const paths = {
-  html: {
-    src: "./app/**/*.html",
-    dest: "./build",
-  },
-  styles: {
-    src: "./app/scss/**/*.scss",
-    dest: "./build/assets/css",
-  },
-  scripts: {
-    src: "./app/js/*.js",
-    dest: "./build/assets/js",
-  },
-  vendors: {
-    src: "./app/js/vendors/**/*.js",
-    dest: "./build/assets/js",
-  },
-  images: {
-    src: "./app/images/**/*",
-    dest: "./build/assets/images",
-  },
-  fonts: {
-    src: "./app/fonts/**/*",
-    dest: "./build/assets/fonts",
-  },
-  favicon: {
-    src: "./app/favicon.ico",
-    dest: "./build",
-  },
+  html: { src: "./app/**/*.html", dest: "./build" },
+  styles: { src: "./app/scss/**/*.scss", dest: "./build/assets/css" },
+  scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
+  vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
+  images: { src: "./app/images/**/*", dest: "./build/assets/images" },
+  fonts: { src: "./app/fonts/**/*", dest: "./build/assets/fonts" },
+  favicon: { src: "./app/favicon.ico", dest: "./build" },
 };
 
+// ✅ Helper for error messages
 const errorHandler = function (err) {
-  console.error("❌ Gulp Error:", err.message);
+  const message = err?.message || "Unknown Gulp Error";
+  notify.onError({
+    title: "❌ Gulp Error",
+    message,
+    sound: false,
+  })(err);
+  console.error("❌ Gulp Error:", message);
   this.emit("end");
 };
 
-// ✅ Native clean task (no del needed)
 const clean = (done) => {
   const folder = path.resolve(__dirname, "build");
   if (fs.existsSync(folder)) {
@@ -85,13 +69,7 @@ const styles = () =>
     .src(paths.styles.src)
     .pipe(plumber({ errorHandler }))
     .pipe(sourcemaps.init())
-    .pipe(sass()) // compile SCSS to CSS
-    .pipe(
-      purgecss({
-        content: ["./app/**/*.html", "./app/js/**/*.js"],
-        safelist: ["cb"], // adjust this if you use dynamic or JS-generated classes
-      })
-    )
+    .pipe(sass().on("error", sass.logError))
     .pipe(postcss([autoprefixer(), cssnano()]))
     .pipe(rename({ basename: "styles", suffix: ".min" }))
     .pipe(sourcemaps.write("."))
@@ -130,23 +108,14 @@ const images = () =>
 const webpImages = () =>
   gulp.src(paths.images.src).pipe(webp()).pipe(gulp.dest(paths.images.dest));
 
-const fonts = () =>
-  gulp
-    .src(paths.fonts.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(gulp.dest(paths.fonts.dest));
+const fonts = () => gulp.src(paths.fonts.src).pipe(gulp.dest(paths.fonts.dest));
 
 const favicon = () =>
-  gulp
-    .src(paths.favicon.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(gulp.dest(paths.favicon.dest));
+  gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
 
 function watchFiles() {
   browserSync.init({
-    server: {
-      baseDir: "./build",
-    },
+    server: { baseDir: "./build" },
     notify: false,
   });
 
@@ -161,10 +130,20 @@ function watchFiles() {
   gulp.watch("./app/*.html", html).on("change", browserSync.reload);
 }
 
+const finalNotify = (done) => {
+  notify({
+    title: "✅ Gulp Build",
+    message: "All tasks completed successfully!",
+    sound: false,
+  }).write("");
+  done();
+};
+
 const build = gulp.series(
   clean,
   gulp.parallel(styles, vendors, scripts, images, webpImages, fonts, favicon),
-  cacheBust
+  cacheBust,
+  finalNotify
 );
 
 const watch = gulp.series(build, watchFiles);
