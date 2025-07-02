@@ -5,6 +5,12 @@ node_modules/
 build/
 dist/
 
+# SSH keys
+deploy_key
+deploy_key.pub
+*.pem
+*.ppk
+
 # Logs
 npm-debug.log*
 yarn-debug.log*
