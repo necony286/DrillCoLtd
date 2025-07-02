@@ -13,7 +13,10 @@ const replace = require("gulp-replace");
 const imagemin = require("gulp-imagemin");
 const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
-const notify = require("gulp-notify");
+const notify = require("gulp-notify").withReporter((options, callback) => {
+  if (process.env.CI) return callback(); // Skip on GitHub Actions
+  require("gulp-notify")(options, callback);
+});
 const htmlmin = require("gulp-htmlmin");
 
 const fs = require("fs");
