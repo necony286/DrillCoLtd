@@ -13,8 +13,9 @@ const replace = require("gulp-replace");
 const imagemin = require("gulp-imagemin");
 const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
+const newer = require("gulp-newer");
 const notify = require("gulp-notify").withReporter((options, callback) => {
-  if (process.env.CI) return callback(); // Skip on GitHub Actions
+  if (process.env.CI) return callback();
   require("gulp-notify")(options, callback);
 });
 const htmlmin = require("gulp-htmlmin");
@@ -28,28 +29,25 @@ const paths = {
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
   vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
   images: { src: "./app/images/**/*", dest: "./build/assets/images" },
-  fonts: { src: "./app/fonts/**/*", dest: "./build/assets/fonts" },
+  fonts: {
+    src: "./app/fonts/**/*.{woff,woff2,ttf,eot,otf}",
+    dest: "./build/assets/fonts",
+  },
   favicon: { src: "./app/favicon.ico", dest: "./build" },
 };
 
-// ✅ Helper for error messages
 const errorHandler = function (err) {
   const message = err?.message || "Unknown Gulp Error";
-  notify.onError({
-    title: "❌ Gulp Error",
-    message,
-    sound: false,
-  })(err);
+  notify.onError({ title: "❌ Gulp Error", message, sound: false })(err);
   console.error("❌ Gulp Error:", message);
   this.emit("end");
 };
 
-const clean = (done) => {
+const clean = async () => {
   const folder = path.resolve(__dirname, "build");
   if (fs.existsSync(folder)) {
     fs.rmSync(folder, { recursive: true, force: true });
   }
-  done();
 };
 
 const curTime = new Date().getTime();
@@ -105,13 +103,28 @@ const images = () =>
   gulp
     .src(paths.images.src)
     .pipe(plumber({ errorHandler }))
-    .pipe(imagemin())
+    .pipe(
+      imagemin([
+        imagemin.mozjpeg({ quality: 80, progressive: true }),
+        imagemin.optipng({ optimizationLevel: 5 }),
+        imagemin.svgo({ plugins: [{ removeViewBox: false }] }),
+      ])
+    )
     .pipe(gulp.dest(paths.images.dest));
 
 const webpImages = () =>
-  gulp.src(paths.images.src).pipe(webp()).pipe(gulp.dest(paths.images.dest));
+  gulp
+    .src(paths.images.src)
+    .pipe(plumber({ errorHandler }))
+    .pipe(webp())
+    .pipe(gulp.dest(paths.images.dest));
 
-const fonts = () => gulp.src(paths.fonts.src).pipe(gulp.dest(paths.fonts.dest));
+const fonts = () =>
+  gulp
+    .src(paths.fonts.src, { allowEmpty: true })
+    .pipe(plumber({ errorHandler }))
+    .pipe(newer(paths.fonts.dest))
+    .pipe(gulp.dest(paths.fonts.dest));
 
 const favicon = () =>
   gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
@@ -129,7 +142,7 @@ function watchFiles() {
   gulp
     .watch(paths.images.src, gulp.series(images, webpImages))
     .on("change", browserSync.reload);
-  gulp.watch(paths.fonts.src, fonts).on("change", browserSync.reload);
+  gulp.watch(paths.fonts.src, fonts);
   gulp.watch("./app/*.html", html).on("change", browserSync.reload);
 }
 
