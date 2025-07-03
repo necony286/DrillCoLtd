@@ -13,7 +13,6 @@ const replace = require("gulp-replace");
 const imagemin = require("gulp-imagemin");
 const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
-const newer = require("gulp-newer");
 const notify = require("gulp-notify").withReporter((options, callback) => {
   if (process.env.CI) return callback();
   require("gulp-notify")(options, callback);
@@ -119,12 +118,24 @@ const webpImages = () =>
     .pipe(webp())
     .pipe(gulp.dest(paths.images.dest));
 
-const fonts = () =>
-  gulp
-    .src(paths.fonts.src, { allowEmpty: true })
-    .pipe(plumber({ errorHandler }))
-    .pipe(newer(paths.fonts.dest))
-    .pipe(gulp.dest(paths.fonts.dest));
+const fonts = (done) => {
+  const srcDir = path.resolve(__dirname, "app/fonts");
+  const destDir = path.resolve(__dirname, "build/assets/fonts");
+
+  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+
+  const fontExtensions = [".woff", ".woff2", ".ttf", ".eot", ".otf"];
+  fs.readdirSync(srcDir).forEach((file) => {
+    const ext = path.extname(file).toLowerCase();
+    if (fontExtensions.includes(ext)) {
+      const srcFile = path.join(srcDir, file);
+      const destFile = path.join(destDir, file);
+      fs.copyFileSync(srcFile, destFile);
+    }
+  });
+
+  done();
+};
 
 const favicon = () =>
   gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
