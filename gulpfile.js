@@ -24,7 +24,7 @@ const path = require("path");
 
 const paths = {
   html: { src: "./app/**/*.html", dest: "./build" },
-  styles: { src: "./app/scss/**/*.scss", dest: "./build/assets/css" },
+  styles: { src: "./app/scss/main.scss", dest: "./build/assets/css" },
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
   vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
   images: { src: "./app/images/**/*", dest: "./build/assets/images" },
@@ -66,7 +66,7 @@ const html = () =>
 
 const styles = () =>
   gulp
-    .src(paths.styles.src)
+    .src("./app/scss/main.scss") // Only main.scss!
     .pipe(plumber({ errorHandler }))
     .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
@@ -146,7 +146,7 @@ function watchFiles() {
     notify: false,
   });
 
-  gulp.watch(paths.styles.src, styles);
+  gulp.watch("./app/scss/**/*.scss", styles);
   gulp.watch(paths.vendors.src, vendors).on("change", browserSync.reload);
   gulp.watch(paths.favicon.src, favicon).on("change", browserSync.reload);
   gulp.watch(paths.scripts.src, scripts).on("change", browserSync.reload);

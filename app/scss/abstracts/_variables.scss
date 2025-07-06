@@ -1,7 +1,7 @@
-// // Scss variables (colors etc...)
+// Scss variables (colors etc...)
 @use "sass:color";
 
-// // Font.
+// Font map
 $font: (
   heading: (
     font-family: (
@@ -22,7 +22,7 @@ $font: (
 );
 
 /*
-EXAMPLE (use in mixins then typo)
+EXAMPLE (use in mixins then typography)
 
 .heading {
   font-family: _font(heading, font-family);
@@ -35,7 +35,7 @@ EXAMPLE (use in mixins then typo)
 }
 */
 
-// Palette. (COLORS)
+// Palette map (COLORS)
 $palette: (
   // primary colors
   primary:
@@ -58,6 +58,7 @@ $palette: (
       text: #58595b,
     )
 );
+
 /*
 EXAMPLE
 

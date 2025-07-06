@@ -1,4 +1,6 @@
 // Scss mixins
+@use "./variables" as *;
+@use "./functions" as *;
 
 // MEDIA QUERY MANAGER
 /*
@@ -9,7 +11,7 @@
 [1199.98 - 1800px]:   is where our normal styles apply
 1800px + :            Extra large devices (large desktops)
 
-$breakpoint arguement choices:
+$breakpoint argument choices:
 - phone-port
 - phone-land
 - tab-port
@@ -22,45 +24,45 @@ $breakpoint arguement choices:
   @if $breakpoint == phone-port {
     @media only screen and (max-width: 35.99875em) {
       @content;
-    } //575.98px
+    } // 575.98px
   }
   @if $breakpoint == phone-land {
     @media only screen and (max-width: 47.99875em) {
       @content;
-    } //767.98px
+    } // 767.98px
   }
   @if $breakpoint == tab-port {
     @media only screen and (max-width: 61.99875em) {
       @content;
-    } //991.98px
+    } // 991.98px
   }
   @if $breakpoint == tab-land {
     @media only screen and (max-width: 74.99875em) {
       @content;
-    } //1199.98px
+    } // 1199.98px
   }
   @if $breakpoint == desktop-big {
     @media only screen and (min-width: 112.5em) {
       @content;
-    } //1800
+    } // 1800px
   }
 }
+
 /*
   EXAMPLE
   
   .example {
     @include respond(phone-port) {
-      rule: value; (background: white;)
-   }
-  }
-  
-  @include respond(desktop-big) {
-     rule: value; (background: black;)
-  }
-  } 
-  */
+      background: white;
+    }
 
-//RESPONSIVE TEXT - FLUID TEXT
+    @include respond(desktop-big) {
+      background: black;
+    }
+  }
+*/
+
+// RESPONSIVE TEXT - FLUID TEXT
 $min-vw: 575.98px; // Screen min
 $max-vw: 1800px; // Screen max
 
@@ -82,34 +84,36 @@ $max-vw: 1800px; // Screen max
     font-size: $max-font-size;
   }
 }
+
 /*
   EXAMPLE
   
   .example {
     @include fluid-font(20px, 48px);
   } 
-  */
+*/
 
-// TYPO MIXINS (use in typography.scss)
+// TYPOGRAPHY MIXINS (used in typography.scss)
 @mixin heading-typo {
-  font-family: _font(heading, font-family);
-  font-weight: _font(heading, weight);
-  color: _palette(typo, heading);
+  font-family: #{_font(heading, font-family)};
+  font-weight: #{_font(heading, weight)};
+  color: #{_palette(typo, heading)};
 }
 
 @mixin text-typo {
-  font-family: _font(text, font-family);
-  font-weight: _font(text, weight);
-  color: _palette(typo, text);
+  font-family: #{_font(text, font-family)};
+  font-weight: #{_font(text, weight)};
+  color: #{_palette(typo, text)};
 }
+
 /*
   EXAMPLE
   
   .heading {
     @include heading-typo;
   }
-  
+
   .text {
     @include text-typo;
   }
-  */
+*/

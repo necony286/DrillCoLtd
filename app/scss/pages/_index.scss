@@ -1,26 +1,19 @@
-@use "../abstracts/all" as *;
-
 header {
   max-width: 141.4rem;
   margin: 0 auto;
   padding: 2rem 4rem;
+
   .main_heading {
     text-align: center;
-    font-size: 14rem;
-    font-weight: bold;
-    color: #34689a;
-    @include respond(phone-land) {
-      font-size: 13rem;
-    }
-    @include respond(phone-port) {
-      font-size: 8.5rem;
-    }
+    font-size: 10rem;
   }
 }
+
 main {
   max-width: 141.4rem;
   margin: 0 auto;
   padding-bottom: 4rem;
+
   .container {
     padding: 0 4rem;
   }
