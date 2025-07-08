@@ -1,6 +1,6 @@
 // Scss mixins
-@use "./variables" as *;
-@use "./functions" as *;
+@use "functions" as func;
+@use "variables" as var;
 
 // MEDIA QUERY MANAGER
 /*
@@ -66,7 +66,8 @@ $breakpoint argument choices:
 $min-vw: 575.98px; // Screen min
 $max-vw: 1800px; // Screen max
 
-@function strip-unit($value) {
+@function _strip-unit($value) {
+  // Renamed to _strip-unit
   @return $value / ($value * 0 + 1);
 }
 
@@ -75,8 +76,10 @@ $max-vw: 1800px; // Screen max
 
   @media screen and (min-width: $min-vw) {
     font-size: calc(
-      #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
-        ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+      #{$min-font-size} + #{_strip-unit($max-font-size - $min-font-size)} *
+        // Call the renamed function
+      ((100vw - #{$min-vw}) / #{_strip-unit($max-vw - $min-vw)})
+        // Call the renamed function
     );
   }
 
@@ -95,15 +98,15 @@ $max-vw: 1800px; // Screen max
 
 // TYPOGRAPHY MIXINS (used in typography.scss)
 @mixin heading-typo {
-  font-family: #{_font(heading, font-family)};
-  font-weight: #{_font(heading, weight)};
-  color: #{_palette(typo, heading)};
+  font-family: #{func.font(var.$font, heading, font-family)};
+  font-weight: #{func.font(var.$font, heading, weight)};
+  color: #{func.palette(var.$palette, typo, heading)};
 }
 
 @mixin text-typo {
-  font-family: #{_font(text, font-family)};
-  font-weight: #{_font(text, weight)};
-  color: #{_palette(typo, text)};
+  font-family: #{func.font(var.$font, text, font-family)};
+  font-weight: #{func.font(var.$font, text, weight)};
+  color: #{func.palette(var.$palette, typo, text)};
 }
 
 /*
