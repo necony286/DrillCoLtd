@@ -1,9 +1,0 @@
-@use "../abstracts/all" as *;
-
-.main_heading {
-  @include heading-typo;
-}
-
-.text {
-  @include text-typo;
-}

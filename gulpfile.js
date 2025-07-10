@@ -28,10 +28,10 @@ const paths = {
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
   vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
   images: { src: "./app/images/**/*", dest: "./build/assets/images" },
-  fonts: {
-    src: "./app/fonts/**/*.{woff,woff2,ttf,eot,otf}",
-    dest: "./build/assets/fonts",
-  },
+  // fonts: {
+  //   src: "./app/fonts/**/*.{woff,woff2,ttf,eot,otf}",
+  //   dest: "./build/assets/fonts",
+  // },
   favicon: { src: "./app/favicon.ico", dest: "./build" },
 };
 
@@ -118,24 +118,24 @@ const webpImages = () =>
     .pipe(webp())
     .pipe(gulp.dest(paths.images.dest));
 
-const fonts = (done) => {
-  const srcDir = path.resolve(__dirname, "app/fonts");
-  const destDir = path.resolve(__dirname, "build/assets/fonts");
+// const fonts = (done) => {
+//   const srcDir = path.resolve(__dirname, "app/fonts");
+//   const destDir = path.resolve(__dirname, "build/assets/fonts");
 
-  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+//   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
 
-  const fontExtensions = [".woff", ".woff2", ".ttf", ".eot", ".otf"];
-  fs.readdirSync(srcDir).forEach((file) => {
-    const ext = path.extname(file).toLowerCase();
-    if (fontExtensions.includes(ext)) {
-      const srcFile = path.join(srcDir, file);
-      const destFile = path.join(destDir, file);
-      fs.copyFileSync(srcFile, destFile);
-    }
-  });
+//   const fontExtensions = [".woff", ".woff2", ".ttf", ".eot", ".otf"];
+//   fs.readdirSync(srcDir).forEach((file) => {
+//     const ext = path.extname(file).toLowerCase();
+//     if (fontExtensions.includes(ext)) {
+//       const srcFile = path.join(srcDir, file);
+//       const destFile = path.join(destDir, file);
+//       fs.copyFileSync(srcFile, destFile);
+//     }
+//   });
 
-  done();
-};
+//   done();
+// };
 
 const favicon = () =>
   gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
@@ -153,7 +153,7 @@ function watchFiles() {
   gulp
     .watch(paths.images.src, gulp.series(images, webpImages))
     .on("change", browserSync.reload);
-  gulp.watch(paths.fonts.src, fonts);
+  // gulp.watch(paths.fonts.src, fonts);
   gulp.watch("./app/*.html", html).on("change", browserSync.reload);
 }
 
@@ -175,7 +175,7 @@ const build = gulp.series(
     scripts,
     images,
     webpImages,
-    fonts,
+    // fonts,
     favicon
   ),
   cacheBust,
@@ -190,7 +190,7 @@ exports.scripts = scripts;
 exports.vendors = vendors;
 exports.images = images;
 exports.webpImages = webpImages;
-exports.fonts = fonts;
+// exports.fonts = fonts;
 exports.favicon = favicon;
 exports.html = html;
 exports.cacheBust = cacheBust;
