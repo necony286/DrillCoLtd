@@ -10,7 +10,7 @@ const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 const replace = require("gulp-replace");
-const imagemin = require("gulp-imagemin");
+// const imagemin = require("gulp-imagemin");
 const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify").withReporter((options, callback) => {
@@ -27,7 +27,7 @@ const paths = {
   styles: { src: "./app/scss/main.scss", dest: "./build/assets/css" },
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
   vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
-  images: { src: "./app/images/**/*", dest: "./build/assets/images" },
+  // images: { src: "./app/images/**/*", dest: "./build/assets/images" },
   // fonts: {
   //   src: "./app/fonts/**/*.{woff,woff2,ttf,eot,otf}",
   //   dest: "./build/assets/fonts",
@@ -98,25 +98,25 @@ const vendors = () =>
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.vendors.dest));
 
-const images = () =>
-  gulp
-    .src(paths.images.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(
-      imagemin([
-        imagemin.mozjpeg({ quality: 80, progressive: true }),
-        imagemin.optipng({ optimizationLevel: 5 }),
-        imagemin.svgo({ plugins: [{ removeViewBox: false }] }),
-      ])
-    )
-    .pipe(gulp.dest(paths.images.dest));
+// const images = () =>
+//   gulp
+//     .src(paths.images.src)
+//     .pipe(plumber({ errorHandler }))
+//     .pipe(
+//       imagemin([
+//         imagemin.mozjpeg({ quality: 80, progressive: true }),
+//         imagemin.optipng({ optimizationLevel: 5 }),
+//         imagemin.svgo({ plugins: [{ removeViewBox: false }] }),
+//       ])
+//     )
+//     .pipe(gulp.dest(paths.images.dest));
 
-const webpImages = () =>
-  gulp
-    .src(paths.images.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(webp())
-    .pipe(gulp.dest(paths.images.dest));
+// const webpImages = () =>
+//   gulp
+//     .src(paths.images.src)
+//     .pipe(plumber({ errorHandler }))
+//     .pipe(webp())
+//     .pipe(gulp.dest(paths.images.dest));
 
 // const fonts = (done) => {
 //   const srcDir = path.resolve(__dirname, "app/fonts");
@@ -150,9 +150,9 @@ function watchFiles() {
   gulp.watch(paths.vendors.src, vendors).on("change", browserSync.reload);
   gulp.watch(paths.favicon.src, favicon).on("change", browserSync.reload);
   gulp.watch(paths.scripts.src, scripts).on("change", browserSync.reload);
-  gulp
-    .watch(paths.images.src, gulp.series(images, webpImages))
-    .on("change", browserSync.reload);
+  // gulp
+  //   .watch(paths.images.src, gulp.series(images, webpImages))
+  //   .on("change", browserSync.reload);
   // gulp.watch(paths.fonts.src, fonts);
   gulp.watch("./app/*.html", html).on("change", browserSync.reload);
 }
@@ -173,8 +173,8 @@ const build = gulp.series(
     styles,
     vendors,
     scripts,
-    images,
-    webpImages,
+    // images,
+    // webpImages,
     // fonts,
     favicon
   ),
@@ -188,8 +188,8 @@ exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
 exports.vendors = vendors;
-exports.images = images;
-exports.webpImages = webpImages;
+// exports.images = images;
+// exports.webpImages = webpImages;
 // exports.fonts = fonts;
 exports.favicon = favicon;
 exports.html = html;
