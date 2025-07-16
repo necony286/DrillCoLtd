@@ -38,7 +38,7 @@ npx gulp
 Outputs an optimized, cache-busted build in the `/build` folder:
 
 - Minified CSS/JS
-- Purged unused styles
+- Purged unused styles with **PurgeCSS**
 - Optimized images (JPEG/PNG/WebP)
 - Final HTML with cache-busting
 
@@ -51,7 +51,7 @@ Outputs an optimized, cache-busted build in the `/build` folder:
 | `gulp`         | Clean + build everything          |
 | `gulp watch`   | Start dev server with live reload |
 | `gulp clean`   | Delete the `/build` folder        |
-| `gulp styles`  | Compile and purge SCSS to CSS     |
+| `gulp styles`  | Compile SCSS and remove unused CSS with PurgeCSS |
 | `gulp scripts` | Transpile and bundle JS           |
 | `gulp images`  | Optimize images                   |
 | `gulp favicon` | Copy favicon                      |

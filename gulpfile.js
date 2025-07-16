@@ -9,6 +9,7 @@ const browserSync = require("browser-sync").create();
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
+const purgecss = require("@fullhuman/postcss-purgecss");
 const replace = require("gulp-replace");
 const imagemin = require("gulp-imagemin");
 const webp = require("gulp-webp");
@@ -70,7 +71,13 @@ const styles = () =>
     .pipe(plumber({ errorHandler }))
     .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
-    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(
+      postcss([
+        purgecss({ content: ["./app/**/*.html", "./app/js/**/*.js"] }),
+        autoprefixer(),
+        cssnano(),
+      ])
+    )
     .pipe(rename({ basename: "styles", suffix: ".min" }))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.styles.dest))
