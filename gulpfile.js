@@ -29,6 +29,7 @@ const paths = {
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
   vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
   images: { src: "./app/images/**/*", dest: "./build/assets/images" },
+  videos: { src: "./app/videos/**/*", dest: "./build/assets/videos" },
   fonts: {
     src: "./app/fonts/**/*.{woff,woff2,ttf,eot,otf}",
     dest: "./build/assets/fonts",
@@ -125,6 +126,12 @@ const webpImages = () =>
     .pipe(webp())
     .pipe(gulp.dest(paths.images.dest));
 
+const videos = () =>
+  gulp
+    .src(paths.videos.src)
+    .pipe(plumber({ errorHandler }))
+    .pipe(gulp.dest(paths.videos.dest));
+
 const fonts = (done) => {
   const srcDir = path.resolve(__dirname, "app/fonts");
   const destDir = path.resolve(__dirname, "build/assets/fonts");
@@ -160,6 +167,7 @@ function watchFiles() {
   gulp
     .watch(paths.images.src, gulp.series(images, webpImages))
     .on("change", browserSync.reload);
+  gulp.watch(paths.videos.src, videos).on("change", browserSync.reload);
   gulp.watch(paths.fonts.src, fonts).on("change", browserSync.reload);
   gulp.watch(paths.html.src, html).on("change", browserSync.reload);
 }
@@ -182,6 +190,7 @@ const build = gulp.series(
     scripts,
     images,
     webpImages,
+    videos,
     fonts,
     favicon
   ),
@@ -197,6 +206,7 @@ exports.scripts = scripts;
 exports.vendors = vendors;
 exports.images = images;
 exports.webpImages = webpImages;
+exports.videos = videos;
 exports.fonts = fonts;
 exports.favicon = favicon;
 exports.html = html;
