@@ -8,6 +8,8 @@ npm install
 
 Installs all required development dependencies.
 
+> **Note**: Development expects **Node.js 18.6.0**. An `.nvmrc` file is provided for use with [nvm](https://github.com/nvm-sh/nvm) or a similar manager.
+
 ---
 
 ### 🧪 Development
