@@ -126,11 +126,20 @@ const webpImages = () =>
     .pipe(webp())
     .pipe(gulp.dest(paths.images.dest));
 
-const videos = () =>
-  gulp
-    .src(paths.videos.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(gulp.dest(paths.videos.dest));
+const videos = (done) => {
+  const srcDir = path.resolve(__dirname, "app/videos");
+  const destDir = path.resolve(__dirname, "build/assets/videos");
+
+  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+
+  fs.readdirSync(srcDir).forEach((file) => {
+    const srcFile = path.join(srcDir, file);
+    const destFile = path.join(destDir, file);
+    fs.copyFileSync(srcFile, destFile);
+  });
+
+  done();
+};
 
 const fonts = (done) => {
   const srcDir = path.resolve(__dirname, "app/fonts");
