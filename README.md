@@ -110,3 +110,19 @@ Outputs an optimized, cache-busted build in the `/build` folder:
     │   └── fonts/
     └── index.html
 ```
+
+---
+
+## 🌐 Network Troubleshooting
+
+When operating behind a proxy, configure npm or environment variables so it can reach external registries.
+
+```bash
+export HTTP_PROXY=http://your.proxy:8080
+export HTTPS_PROXY=http://your.proxy:8080
+# or
+npm config set proxy http://your.proxy:8080
+npm config set https-proxy http://your.proxy:8080
+```
+
+If network access is restricted, `npm install` may fail with `ECONNRESET`.
