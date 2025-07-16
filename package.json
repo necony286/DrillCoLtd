@@ -1,4 +1,7 @@
 {
+  "name": "drillcoltd-website",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "start": "gulp watch",
     "build": "gulp",
