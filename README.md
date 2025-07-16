@@ -27,6 +27,12 @@ Starts the development server with:
 - Image optimization
 - Live reload via BrowserSync
 
+Clean the `/build` directory:
+
+```bash
+npm run clean
+```
+
 ---
 
 ### 🏗️ Building for Production
