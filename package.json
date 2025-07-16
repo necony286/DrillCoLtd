@@ -26,5 +26,11 @@
     "gulp-terser": "^2.1.0",
     "gulp-webp": "^4.0.1",
     "sass": "^1.89.2"
+  },
+  "engines": {
+    "node": ">=18.6.0"
+  },
+  "overrides": {
+    "yargs-parser": "21.1.1"
   }
 }
