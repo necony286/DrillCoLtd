@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "gulp watch",
-    "build": "gulp"
+    "build": "gulp",
+    "clean": "gulp clean"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
