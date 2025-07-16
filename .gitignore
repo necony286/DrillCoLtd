@@ -33,7 +33,6 @@ ehthumbs.db
 .vscode/
 
 # Optional lock files (if using npm or yarn exclusively)
-package-lock.json
 yarn.lock
 
 # Cache
