@@ -54,15 +54,15 @@ Outputs an optimized, cache-busted build in the `/build` folder:
 
 ### 🔧 Gulp Task Reference
 
-| Command        | Description                       |
-| -------------- | --------------------------------- |
-| `gulp`         | Clean + build everything          |
-| `gulp watch`   | Start dev server with live reload |
-| `gulp clean`   | Delete the `/build` folder        |
+| Command        | Description                                      |
+| -------------- | ------------------------------------------------ |
+| `gulp`         | Clean + build everything                         |
+| `gulp watch`   | Start dev server with live reload                |
+| `gulp clean`   | Delete the `/build` folder                       |
 | `gulp styles`  | Compile SCSS and remove unused CSS with PurgeCSS |
-| `gulp scripts` | Transpile and bundle JS           |
-| `gulp images`  | Optimize images                   |
-| `gulp favicon` | Copy favicon                      |
+| `gulp scripts` | Transpile and bundle JS                          |
+| `gulp images`  | Optimize images                                  |
+| `gulp favicon` | Copy favicon                                     |
 
 ---
 
