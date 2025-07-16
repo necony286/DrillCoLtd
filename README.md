@@ -81,6 +81,7 @@ Most hosts can be configured to automatically build and deploy from your reposit
 | `gulp scripts` | Transpile and bundle JS                          |
 | `gulp images`  | Optimize images                                  |
 | `gulp favicon` | Copy favicon                                     |
+| `gulp videos` | Copy videos to the build directory |
 
 ---
 
@@ -115,6 +116,7 @@ Most hosts can be configured to automatically build and deploy from your reposit
 │   │   ├── pages/
 │   │   └── main.scss
 │   ├── fonts/
+│   ├── videos/             # Background videos
 │   └── index.html
 │
 └── build/                  # Output directory
@@ -125,6 +127,7 @@ Most hosts can be configured to automatically build and deploy from your reposit
     │   │   ├── app.min.js
     │   │   └── vendors.min.js
     │   ├── images/
+    │   ├── videos/
     │   └── fonts/
     └── index.html
 ```
