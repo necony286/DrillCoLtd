@@ -153,8 +153,8 @@ function watchFiles() {
   gulp
     .watch(paths.images.src, gulp.series(images, webpImages))
     .on("change", browserSync.reload);
-  gulp.watch(paths.fonts.src, fonts);
-  gulp.watch("./app/*.html", html).on("change", browserSync.reload);
+  gulp.watch(paths.fonts.src, fonts).on("change", browserSync.reload);
+  gulp.watch(paths.html.src, html).on("change", browserSync.reload);
 }
 
 const finalNotify = (done) => {
