@@ -1,3 +1,9 @@
+# DRILLCOLTD Website
+
+A modern, responsive website for DRILL WEED SHOP, built with a Gulp.js asset pipeline, Sass, and modern JavaScript. This project features a full-screen video background and a modular, maintainable codebase.
+
+---
+
 ## 🚀 Getting Started
 
 ### 📦 Installation
@@ -49,6 +55,18 @@ Outputs an optimized, cache-busted build in the `/build` folder:
 - Purged unused styles with **PurgeCSS**
 - Optimized images (JPEG/PNG/WebP)
 - Final HTML with cache-busting
+
+---
+
+### 🚀 Deployment
+
+The production-ready, static files are located in the `/build` directory. You can deploy this folder to any static web host, such as:
+
+- [Netlify](https://www.netlify.com/)
+- [Vercel](https://vercel.com/)
+- [GitHub Pages](https://pages.github.com/)
+
+Most hosts can be configured to automatically build and deploy from your repository upon a `git push`.
 
 ---
 
@@ -126,3 +144,9 @@ npm config set https-proxy http://your.proxy:8080
 ```
 
 If network access is restricted, `npm install` may fail with `ECONNRESET`.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
