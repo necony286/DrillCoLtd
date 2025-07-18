@@ -1,31 +1,26 @@
 @use "../abstracts/all" as *;
 
 header.header {
-  height: 100vh; // Make header full viewport height
+  height: 100dvh; // Use dynamic viewport height for better mobile support
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
 
-  .main_heading {
-    color: white;
-    text-shadow: 0 0.2rem 0.5rem rgba(black, 0.5);
-    z-index: 1; // Ensure heading is above the video overlay
-    text-align: center;
-    font-size: 10rem;
-  }
-}
+  // Set the background image with fallbacks
+  // 1. Fallback for very old browsers
+  background-image: url("../images/header-bg.jpg");
+  // 2. Modern browsers will use this, picking the best format
+  background-image: image-set(
+    url("../images/header-bg.webp") type("image/webp"),
+    url("../images/header-bg.jpg") type("image/jpeg")
+  );
 
-.bg-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: -1; // Place video behind all other header content
-  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-  // Optional: Add a dark overlay for better text readability
+  // Dark overlay for readability
   &::after {
     content: "";
     position: absolute;
@@ -33,22 +28,19 @@ header.header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(black, 0.85);
+    background-color: rgba(black, 0.5); // Adjust opacity as needed
+    z-index: 0;
   }
-}
 
-.bg-video__content {
-  height: 100%;
-  width: 100%;
-  object-fit: cover; // Makes video cover the area without distortion
+  .main_heading {
+    color: white;
+    text-shadow: 0 0.2rem 0.5rem rgba(black, 0.5);
+    z-index: 1; // Ensure heading is above the overlay
+    text-align: center;
+    font-size: 10rem;
+  }
 }
 
 main.main {
-  // max-width: 141.4rem;
-  // margin: 0 auto;
-  // padding-bottom: 4rem;
-
-  .container {
-    // padding: 0 4rem;
-  }
+  // ... your existing main styles
 }

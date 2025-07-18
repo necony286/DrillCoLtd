@@ -11,8 +11,6 @@ const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
 const purgecss = require("@fullhuman/postcss-purgecss");
 const replace = require("gulp-replace");
-const imagemin = require("gulp-imagemin");
-const webp = require("gulp-webp");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify").withReporter((options, callback) => {
   if (process.env.CI) return callback();
@@ -106,25 +104,37 @@ const vendors = () =>
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.vendors.dest));
 
-const images = () =>
-  gulp
-    .src(paths.images.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(
-      imagemin([
-        imagemin.mozjpeg({ quality: 80, progressive: true }),
-        imagemin.optipng({ optimizationLevel: 5 }),
-        imagemin.svgo({ plugins: [{ removeViewBox: false }] }),
-      ])
-    )
-    .pipe(gulp.dest(paths.images.dest));
+const images = async (done) => {
+  const imagemin = (await import("imagemin")).default;
+  const imageminMozjpeg = (await import("imagemin-mozjpeg")).default;
+  const imageminOptipng = (await import("imagemin-optipng")).default;
+  const imageminSvgo = (await import("imagemin-svgo")).default;
 
-const webpImages = () =>
-  gulp
-    .src(paths.images.src)
-    .pipe(plumber({ errorHandler }))
-    .pipe(webp())
-    .pipe(gulp.dest(paths.images.dest));
+  const files = await imagemin([paths.images.src], {
+    destination: paths.images.dest,
+    plugins: [
+      imageminMozjpeg({ quality: 80 }),
+      imageminOptipng({ optimizationLevel: 5 }),
+      imageminSvgo({
+        plugins: [{ name: "removeViewBox", active: false }],
+      }),
+    ],
+  });
+  console.log(`Processed ${files.length} images.`);
+  done();
+};
+
+const webpImages = async (done) => {
+  const imagemin = (await import("imagemin")).default;
+  const imageminWebp = (await import("imagemin-webp")).default;
+
+  const files = await imagemin([paths.images.src], {
+    destination: paths.images.dest,
+    plugins: [imageminWebp({ quality: 80 })],
+  });
+  console.log(`Converted ${files.length} images to WebP.`);
+  done();
+};
 
 const videos = (done) => {
   const srcDir = path.resolve(__dirname, "app/videos");
