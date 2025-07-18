@@ -140,6 +140,12 @@ const videos = (done) => {
   const srcDir = path.resolve(__dirname, "app/videos");
   const destDir = path.resolve(__dirname, "build/assets/videos");
 
+  // Check if the source directory exists before trying to read it
+  if (!fs.existsSync(srcDir)) {
+    console.log("Source videos directory not found, skipping task.");
+    return done();
+  }
+
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
 
   fs.readdirSync(srcDir).forEach((file) => {
@@ -154,6 +160,12 @@ const videos = (done) => {
 const fonts = (done) => {
   const srcDir = path.resolve(__dirname, "app/fonts");
   const destDir = path.resolve(__dirname, "build/assets/fonts");
+
+  // Check if the source directory exists before trying to read it
+  if (!fs.existsSync(srcDir)) {
+    console.log("Source fonts directory not found, skipping task.");
+    return done();
+  }
 
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
 
