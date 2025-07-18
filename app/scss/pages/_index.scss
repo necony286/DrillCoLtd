@@ -4,8 +4,8 @@ header.header {
   height: 100dvh; // Use dynamic viewport height for better mobile support
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: center; // Vertically centers
+  justify-content: center; // Horizontally centers
 
   // Set the background image with fallbacks
   // 1. Fallback for very old browsers
@@ -33,11 +33,16 @@ header.header {
   }
 
   .main_heading {
-    color: white;
-    text-shadow: 0 0.2rem 0.5rem rgba(black, 0.5);
     z-index: 1; // Ensure heading is above the overlay
-    text-align: center;
-    font-size: 10rem;
+    width: 100%; // Allow the heading to span the full width
+    display: flex; // Make the h1 a flex container
+    justify-content: center; // Center the image inside the h1
+
+    img {
+      max-width: 500px; // Adjust the size of your logo as needed
+      width: 90%; // Ensures the logo shrinks on smaller screens
+      height: auto; // Maintains aspect ratio
+    }
   }
 }
 
