@@ -134,13 +134,13 @@ const webpImages = async (done) => {
 
 const videos = () =>
   gulp
-    .src(paths.videos.src, { since: gulp.lastRun(videos) })
+    .src(paths.videos.src, { since: gulp.lastRun(videos), allowEmpty: true })
     .pipe(plumber({ errorHandler }))
     .pipe(gulp.dest(paths.videos.dest));
 
 const fonts = () =>
   gulp
-    .src(paths.fonts.src, { since: gulp.lastRun(fonts) })
+    .src(paths.fonts.src, { since: gulp.lastRun(fonts), allowEmpty: true })
     .pipe(plumber({ errorHandler }))
     .pipe(gulp.dest(paths.fonts.dest));
 
