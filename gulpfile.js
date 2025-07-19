@@ -17,7 +17,6 @@ const notify = require("gulp-notify").withReporter((options, callback) => {
   require("gulp-notify")(options, callback);
 });
 const htmlmin = require("gulp-htmlmin");
-const { deleteAsync } = require("del");
 
 const paths = {
   html: { src: "./app/**/*.html", dest: "./build" },
@@ -40,7 +39,10 @@ const errorHandler = function (err) {
   this.emit("end");
 };
 
-const clean = () => deleteAsync(["./build"]);
+const clean = async () => {
+  const { deleteAsync } = await import("del");
+  return deleteAsync(["./build"]);
+};
 
 const cacheBust = () => {
   const curTime = new Date().getTime();
