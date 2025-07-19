@@ -17,6 +17,9 @@ const notify = require("gulp-notify").withReporter((options, callback) => {
   require("gulp-notify")(options, callback);
 });
 const htmlmin = require("gulp-htmlmin");
+const fs = require("fs");
+const path = require("path");
+const { globSync } = require("glob");
 
 const paths = {
   html: { src: "./app/**/*.html", dest: "./build" },
@@ -132,20 +135,33 @@ const webpImages = async (done) => {
   done();
 };
 
-const videos = () =>
-  gulp
-    .src(paths.videos.src, { since: gulp.lastRun(videos), allowEmpty: true })
-    .pipe(plumber({ errorHandler }))
-    .pipe(gulp.dest(paths.videos.dest));
+const createCopyTask = (taskName, pathsConfig) => (done) => {
+  const sourceFiles = globSync(pathsConfig.src);
+  if (sourceFiles.length === 0) {
+    return done();
+  }
+  const destDir = pathsConfig.dest;
+  if (!fs.existsSync(destDir)) {
+    fs.mkdirSync(destDir, { recursive: true });
+  }
+  sourceFiles.forEach((file) => {
+    const destPath = path.join(destDir, path.basename(file));
+    fs.copyFileSync(file, destPath);
+  });
+  console.log(`Copied ${sourceFiles.length} ${taskName}.`);
+  done();
+};
 
-const fonts = () =>
-  gulp
-    .src(paths.fonts.src, { since: gulp.lastRun(fonts), allowEmpty: true })
-    .pipe(plumber({ errorHandler }))
-    .pipe(gulp.dest(paths.fonts.dest));
+const videos = createCopyTask("videos", paths.videos);
+const fonts = createCopyTask("fonts", paths.fonts);
 
 const favicon = () =>
   gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
+
+const reload = (done) => {
+  browserSync.reload();
+  done();
+};
 
 function watchFiles() {
   browserSync.init({
@@ -154,17 +170,14 @@ function watchFiles() {
   });
 
   gulp.watch("./app/scss/**/*.scss", styles);
-  gulp.watch(paths.vendors.src, vendors).on("change", browserSync.reload);
-  gulp.watch(paths.favicon.src, favicon).on("change", browserSync.reload);
-  gulp.watch(paths.scripts.src, scripts).on("change", browserSync.reload);
-  gulp
-    .watch(paths.images.src, gulp.series(images, webpImages))
-    .on("change", browserSync.reload);
-  gulp.watch(paths.videos.src, videos).on("change", browserSync.reload);
-  gulp.watch(paths.fonts.src, fonts).on("change", browserSync.reload);
-  gulp
-    .watch(paths.html.src, gulp.series(html, cacheBust))
-    .on("change", browserSync.reload);
+
+  gulp.watch(paths.vendors.src, gulp.series(vendors, reload));
+  gulp.watch(paths.favicon.src, gulp.series(favicon, reload));
+  gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
+  gulp.watch(paths.images.src, gulp.series(images, webpImages, reload));
+  gulp.watch(paths.videos.src, gulp.series(videos, reload));
+  gulp.watch(paths.fonts.src, gulp.series(fonts, reload));
+  gulp.watch(paths.html.src, gulp.series(html, cacheBust, reload));
 }
 
 const finalNotify = (done) => {
