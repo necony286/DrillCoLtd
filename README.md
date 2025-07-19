@@ -107,7 +107,7 @@ Most hosts can be configured to automatically build and deploy from your reposit
 - **[Babel](https://babeljs.io/)** – Transpiles modern JavaScript to browser-compatible code
 - **[BrowserSync](https://browsersync.io/)** – Live-reloading and syncing across devices
 - **[gulp-imagemin](https://github.com/sindresorhus/gulp-imagemin)** – Optimizes image assets
-- **[gulp-webp](https://github.com/sindresorhus/gulp-webp)** – Converts images to WebP format
+- **[imagemin-webp](https://github.com/imagemin/imagemin-webp)** – Converts images to WebP format
 - **[gulp-sourcemaps](https://github.com/gulp-sourcemaps/gulp-sourcemaps)** – Generates source maps for debugging
 - **[gulp-notify](https://github.com/mikaelbr/gulp-notify)** – Desktop notifications for build errors
 
