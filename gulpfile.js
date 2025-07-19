@@ -104,7 +104,6 @@ const vendors = () =>
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.vendors.dest));
 
-
 const images = async (done) => {
   const imagemin = (await import("imagemin")).default;
   const imageminMozjpeg = (await import("imagemin-mozjpeg")).default;
@@ -201,7 +200,9 @@ function watchFiles() {
     .on("change", browserSync.reload);
   gulp.watch(paths.videos.src, videos).on("change", browserSync.reload);
   gulp.watch(paths.fonts.src, fonts).on("change", browserSync.reload);
-  gulp.watch(paths.html.src, html).on("change", browserSync.reload);
+  gulp
+    .watch(paths.html.src, gulp.series(html, cacheBust))
+    .on("change", browserSync.reload);
 }
 
 const finalNotify = (done) => {
