@@ -10,12 +10,12 @@ header.header {
   // Set the background image with fallbacks
   // 1. Fallback for very old browsers
   background-image: url("../images/header-bg.jpg");
+
   // 2. Modern browsers will use this, picking the best format
   background-image: image-set(
     url("../images/header-bg.webp") type("image/webp"),
     url("../images/header-bg.jpg") type("image/jpeg")
   );
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -27,7 +27,7 @@ header.header {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(black, 0.5);
+    background-color: rgb(black, 0.5);
     z-index: 0;
   }
 
@@ -66,7 +66,7 @@ header.header {
     color: white;
     font-size: 1.8rem;
     margin-top: 1rem;
-    text-shadow: 0 1px 3px rgba(black, 0.7);
+    text-shadow: 0 1px 3px rgb(black, 0.7);
     max-width: 35rem;
     font-weight: 400;
     text-align: center;
@@ -75,7 +75,6 @@ header.header {
   .contact-section {
     max-width: 360px;
     margin-top: 5rem;
-
     width: 100%;
 
     @include respond(tab-land) {
@@ -88,7 +87,7 @@ header.header {
       font-size: 3rem;
       margin-bottom: 1rem;
       color: white;
-      text-shadow: 0 1px 3px rgba(black, 0.7);
+      text-shadow: 0 1px 3px rgb(black, 0.7);
     }
 
     &__promo {
@@ -96,7 +95,7 @@ header.header {
       margin-bottom: 2.5rem;
       line-height: 1.6;
       color: white;
-      text-shadow: 0 1px 3px rgba(black, 0.7);
+      text-shadow: 0 1px 3px rgb(black, 0.7);
     }
   }
 
@@ -121,7 +120,7 @@ header.header {
       width: 100%;
       padding: 0.8rem 1rem;
       font-size: 1rem;
-      background-color: rgba(0, 0, 0, 0.3);
+      background-color: rgb(0 0 0 / 30%);
       border: 1px solid #888;
       border-radius: 4px;
       color: white;
@@ -133,7 +132,7 @@ header.header {
       &:focus {
         outline: none;
         border-color: white;
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 0 3px rgb(255 255 255 / 20%);
       }
     }
 

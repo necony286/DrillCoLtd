@@ -3,6 +3,7 @@
 @use "variables" as var;
 
 // MEDIA QUERY MANAGER
+
 /*
 0 - 575.98px:         Extra small devices (portrait phones, less than 576px)
 575.98 - 767.98px:    Small devices (landscape phones, less than 768px)
@@ -23,31 +24,35 @@ $breakpoint argument choices:
 @mixin respond($breakpoint) {
   @if $breakpoint == phone-port {
     // Becomes active at 576px and up
-    @media only screen and (min-width: 36em) {
+    @media only screen and (width >= 36em) {
       @content;
     }
   }
+
   @if $breakpoint == phone-land {
     // Becomes active at 768px and up
-    @media only screen and (min-width: 48em) {
+    @media only screen and (width >= 48em) {
       @content;
     }
   }
+
   @if $breakpoint == tab-port {
     // Becomes active at 992px and up
-    @media only screen and (min-width: 62em) {
+    @media only screen and (width >= 62em) {
       @content;
     }
   }
+
   @if $breakpoint == tab-land {
     // Becomes active at 1200px and up
-    @media only screen and (min-width: 75em) {
+    @media only screen and (width >= 75em) {
       @content;
     }
   }
+
   @if $breakpoint == desktop-big {
     // Becomes active at 1800px and up
-    @media only screen and (min-width: 112.5em) {
+    @media only screen and (width >= 112.5em) {
       @content;
     }
   }

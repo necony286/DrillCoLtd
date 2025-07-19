@@ -1,7 +1,7 @@
 // Base styles
 @use "../abstracts/all" as *;
 
-//CSS reset (Condensed Universal Reset)
+// CSS reset (Condensed Universal Reset)
 *,
 *::before,
 *::after {
@@ -49,5 +49,6 @@ html {
 
 body {
   @include text-typo; // Applies default font-family, weight, and color
+
   height: 100%;
 }

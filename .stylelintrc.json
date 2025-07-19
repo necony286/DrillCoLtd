@@ -2,6 +2,18 @@
   "extends": "stylelint-config-standard-scss",
   "rules": {
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": true
+    "scss/at-rule-no-unknown": true,
+    "selector-class-pattern": [
+      "^[a-z0-9]+(?:[_-]{1,2}[a-z0-9]+)*$",
+      {
+        "message": "Selector should be written in lowercase with hyphens or underscores (e.g. my-class, my_class, or my__class)"
+      }
+    ],
+    "scss/at-function-pattern": [
+      "^_?[a-z0-9]+(-[a-z0-9]+)*$",
+      {
+        "message": "Function name should be kebab-case, optionally starting with an underscore (e.g. my-function, _my-function)"
+      }
+    ]
   }
 }
