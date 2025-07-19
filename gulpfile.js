@@ -52,10 +52,10 @@ const clean = async () => {
 const curTime = new Date().getTime();
 const cacheBust = () =>
   gulp
-    .src(paths.html.src)
+    .src("./build/**/*.html") // CORRECTED: Read from the build directory
     .pipe(plumber({ errorHandler }))
     .pipe(replace(/cb=\d+/g, "cb=" + curTime))
-    .pipe(gulp.dest(paths.html.dest));
+    .pipe(gulp.dest("./build")); // Write back to the build directory
 
 const html = () =>
   gulp
