@@ -74,21 +74,25 @@ Outputs an optimized, cache-busted build in the `/build` folder:
 - Purged unused styles with **PurgeCSS**
 - Optimized images (JPEG/PNG/WebP)
 - Final HTML with cache-busting
- - Asset links in `app/index.html` and `app/contact.html` include a `?cb=0`
-   placeholder that Gulp replaces with a timestamp during the build to ensure
-   browsers fetch the latest files.
+- Asset links in `app/index.html` and `app/contact.html` include a `?cb=0`
+  placeholder that Gulp replaces with a timestamp during the build to ensure
+  browsers fetch the latest files.
 
 ---
 
 ### 🚀 Deployment
 
-The production-ready, static files are located in the `/build` directory. You can deploy this folder to any static web host, such as:
+The production-ready, static files are located in the `/build` directory. This folder can be deployed to any static web host.
 
-- [Netlify](https://www.netlify.com/)
-- [Vercel](https://vercel.com/)
-- [GitHub Pages](https://pages.github.com/)
+#### Automated Deployment
 
-Most hosts can be configured to automatically build and deploy from your repository upon a `git push`.
+This repository is configured for continuous deployment using GitHub Actions. When changes are pushed to the `main` branch, the following automated process is triggered, as defined in [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml):
+
+1.  **Checkout & Setup**: The repository code is checked out, and the correct Node.js version is set up.
+2.  **Install & Build**: Dependencies are installed (`npm install`), and the project is built for production (`npx gulp`).
+3.  **Deploy**: The contents of the `build/` directory are securely copied to the production server using SCP.
+
+This ensures that the live website is always up-to-date with the latest changes in the `main` branch.
 
 ---
 
@@ -103,7 +107,7 @@ Most hosts can be configured to automatically build and deploy from your reposit
 | `gulp scripts` | Transpile and bundle JS                          |
 | `gulp images`  | Optimize images                                  |
 | `gulp favicon` | Copy favicon                                     |
-| `gulp videos` | Copy videos to the build directory |
+| `gulp videos`  | Copy videos to the build directory               |
 
 ---
 
