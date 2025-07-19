@@ -1,6 +1,6 @@
 # DRILLCOLTD Website
 
-A modern, responsive website for DRILL WEED SHOP, built with a Gulp.js asset pipeline, Sass, and modern JavaScript. This project features a full-screen video background and a modular, maintainable codebase.
+A modern, responsive website for DRILL WEED SHOP, built with a Gulp.js asset pipeline, Sass, and modern JavaScript. The site uses a static background image and a modular, maintainable codebase.
 
 ---
 
