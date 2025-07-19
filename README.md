@@ -16,6 +16,15 @@ Installs all required development dependencies.
 
 > **Note**: Development expects **Node.js 18.6.0**. An `.nvmrc` file is provided for use with [nvm](https://github.com/nvm-sh/nvm) or a similar manager.
 
+### 📌 Node Version via nvm
+
+If you have [nvm](https://github.com/nvm-sh/nvm) installed, run the following commands before starting development. They ensure you are using Node **18.6.0** as defined in `.nvmrc`:
+
+```bash
+nvm install 18.6.0
+nvm use 18.6.0
+```
+
 ---
 
 ### 🧪 Development
