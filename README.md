@@ -55,6 +55,9 @@ Outputs an optimized, cache-busted build in the `/build` folder:
 - Purged unused styles with **PurgeCSS**
 - Optimized images (JPEG/PNG/WebP)
 - Final HTML with cache-busting
+- Asset links in `app/index.html` include a `?cb=0` placeholder that Gulp
+  replaces with a timestamp during the build to ensure browsers fetch the
+  latest files.
 
 ---
 
