@@ -152,4 +152,4 @@ If network access is restricted, `npm install` may fail with `ECONNRESET`.
 
 ## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is proprietary. All rights reserved. See the [LICENSE](LICENSE) file for details.
