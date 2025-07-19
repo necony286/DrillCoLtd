@@ -86,10 +86,9 @@ $max-vw: 1800px; // Screen max
 
   @media screen and (min-width: $min-vw) {
     font-size: calc(
-      #{$min-font-size} + #{_strip-unit($max-font-size - $min-font-size)} *
-        // Call the renamed function
-      ((100vw - #{$min-vw}) / #{_strip-unit($max-vw - $min-vw)})
-        // Call the renamed function
+      #{$min-font-size} + (#{_strip-unit($max-font-size - $min-font-size)} * ((
+                  100vw - #{$min-vw}
+                ) / #{_strip-unit($max-vw - $min-vw)}))
     );
   }
 
