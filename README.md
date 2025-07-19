@@ -47,6 +47,17 @@ Clean the `/build` directory:
 npm run clean
 ```
 
+### 🧹 Linting
+
+Run the linters to check your source files:
+
+```bash
+npm run lint:js
+npm run lint:scss
+```
+
+`npm run lint:js` executes **ESLint** on the project's JavaScript, while `npm run lint:scss` runs **Stylelint** against all SCSS files.
+
 ---
 
 ### 🏗️ Building for Production
