@@ -17,9 +17,7 @@ const notify = require("gulp-notify").withReporter((options, callback) => {
   require("gulp-notify")(options, callback);
 });
 const htmlmin = require("gulp-htmlmin");
-
-const fs = require("fs");
-const path = require("path");
+const { deleteAsync } = require("del");
 
 const paths = {
   html: { src: "./app/**/*.html", dest: "./build" },
@@ -42,20 +40,16 @@ const errorHandler = function (err) {
   this.emit("end");
 };
 
-const clean = async () => {
-  const folder = path.resolve(__dirname, "build");
-  if (fs.existsSync(folder)) {
-    fs.rmSync(folder, { recursive: true, force: true });
-  }
-};
+const clean = () => deleteAsync(["./build"]);
 
-const curTime = new Date().getTime();
-const cacheBust = () =>
-  gulp
-    .src("./build/**/*.html") // CORRECTED: Read from the build directory
+const cacheBust = () => {
+  const curTime = new Date().getTime();
+  return gulp
+    .src("./build/**/*.html")
     .pipe(plumber({ errorHandler }))
     .pipe(replace(/cb=\d+/g, "cb=" + curTime))
-    .pipe(gulp.dest("./build")); // Write back to the build directory
+    .pipe(gulp.dest("./build"));
+};
 
 const html = () =>
   gulp
@@ -136,51 +130,17 @@ const webpImages = async (done) => {
   done();
 };
 
-const videos = (done) => {
-  const srcDir = path.resolve(__dirname, "app/videos");
-  const destDir = path.resolve(__dirname, "build/assets/videos");
+const videos = () =>
+  gulp
+    .src(paths.videos.src, { since: gulp.lastRun(videos) })
+    .pipe(plumber({ errorHandler }))
+    .pipe(gulp.dest(paths.videos.dest));
 
-  // Check if the source directory exists before trying to read it
-  if (!fs.existsSync(srcDir)) {
-    console.log("Source videos directory not found, skipping task.");
-    return done();
-  }
-
-  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
-
-  fs.readdirSync(srcDir).forEach((file) => {
-    const srcFile = path.join(srcDir, file);
-    const destFile = path.join(destDir, file);
-    fs.copyFileSync(srcFile, destFile);
-  });
-
-  done();
-};
-
-const fonts = (done) => {
-  const srcDir = path.resolve(__dirname, "app/fonts");
-  const destDir = path.resolve(__dirname, "build/assets/fonts");
-
-  // Check if the source directory exists before trying to read it
-  if (!fs.existsSync(srcDir)) {
-    console.log("Source fonts directory not found, skipping task.");
-    return done();
-  }
-
-  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
-
-  const fontExtensions = [".woff", ".woff2", ".ttf", ".eot", ".otf"];
-  fs.readdirSync(srcDir).forEach((file) => {
-    const ext = path.extname(file).toLowerCase();
-    if (fontExtensions.includes(ext)) {
-      const srcFile = path.join(srcDir, file);
-      const destFile = path.join(destDir, file);
-      fs.copyFileSync(srcFile, destFile);
-    }
-  });
-
-  done();
-};
+const fonts = () =>
+  gulp
+    .src(paths.fonts.src, { since: gulp.lastRun(fonts) })
+    .pipe(plumber({ errorHandler }))
+    .pipe(gulp.dest(paths.fonts.dest));
 
 const favicon = () =>
   gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
