@@ -1,7 +1,7 @@
 const gulp = require("gulp");
 const sass = require("gulp-sass")(require("sass"));
-const babel = require("gulp-babel");
 const sourcemaps = require("gulp-sourcemaps");
+const babel = require("gulp-babel");
 const concat = require("gulp-concat");
 const terser = require("gulp-terser");
 const rename = require("gulp-rename");
@@ -103,6 +103,7 @@ const vendors = () =>
     .pipe(concat("vendors.min.js"))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.vendors.dest));
+
 
 const images = async (done) => {
   const imagemin = (await import("imagemin")).default;

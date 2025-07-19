@@ -29,7 +29,6 @@ npx gulp watch
 Starts the development server with:
 
 - SCSS compilation
-- JavaScript transpiling
 - Image optimization
 - Live reload via BrowserSync
 
