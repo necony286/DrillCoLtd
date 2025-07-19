@@ -16,49 +16,38 @@
   box-sizing: inherit;
 }
 
-html,
-body {
+html {
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-}
 
-body {
-  @include text-typo;
-  // default font-family, font-weight, and color
-  // entire page through inheritance.
-}
+  // This defines what 1rem is. Mobile-first approach.
+  // Start with the smallest size for mobile.
+  font-size: 50%; // 1rem = 8px (for screens < 768px)
 
-html {
-  // This defines what 1rem is
-  font-size: 62.5%; //1 rem = 10px, 10px/16px = 62.5%
-
-  @include respond(tab-land) {
-    // width < 1199.98px
-    font-size: 56.25%; //1 rem = 9px, 9/16 = 56.25%
+  @include respond(phone-land) {
+    // 768px and up
+    font-size: 56.25%; // 1rem = 9px
   }
 
   @include respond(tab-port) {
-    // width < 991.98px
-    font-size: 50%; //1 rem = 8px, 8/16 = 50%
+    // 992px and up
+    font-size: 62.5%; // 1rem = 10px
   }
 
-  @include respond(phone-land) {
-    // width < 767.98px
-    font-size: 43.75%; //1 rem = 7px, 7/16 = 43.75%
+  @include respond(tab-land) {
+    // 1200px and up
+    font-size: 68.75%; // 1rem = 11px
   }
-
-  // @include respond(phone-port) {
-  //   // width < 575.98px
-  //   font-size: 37.5%; //1 rem = 6px, 6/16 = 37.5%
-  // }
 
   @include respond(desktop-big) {
-    font-size: 75%; //1rem = 12px, 12/16 = 75%
+    // 1800px and up
+    font-size: 75%; // 1rem = 12px
   }
 }
 
 body {
+  @include text-typo; // Applies default font-family, weight, and color
   height: 100%;
-  box-sizing: border-box;
 }
