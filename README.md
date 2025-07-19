@@ -63,9 +63,9 @@ Outputs an optimized, cache-busted build in the `/build` folder:
 - Purged unused styles with **PurgeCSS**
 - Optimized images (JPEG/PNG/WebP)
 - Final HTML with cache-busting
-- Asset links in `app/index.html` include a `?cb=0` placeholder that Gulp
-  replaces with a timestamp during the build to ensure browsers fetch the
-  latest files.
+ - Asset links in `app/index.html` and `app/contact.html` include a `?cb=0`
+   placeholder that Gulp replaces with a timestamp during the build to ensure
+   browsers fetch the latest files.
 
 ---
 
@@ -128,7 +128,8 @@ Most hosts can be configured to automatically build and deploy from your reposit
 │   │   └── main.scss
 │   ├── fonts/
 │   ├── videos/             # Background videos
-│   └── index.html
+│   ├── index.html
+│   └── contact.html
 │
 └── build/                  # Output directory
     ├── assets/
@@ -140,7 +141,8 @@ Most hosts can be configured to automatically build and deploy from your reposit
     │   ├── images/
     │   ├── videos/
     │   └── fonts/
-    └── index.html
+    ├── index.html
+    └── contact.html
 ```
 
 ---
