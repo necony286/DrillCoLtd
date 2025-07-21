@@ -30,7 +30,7 @@ Thumbs.db
 ehthumbs.db
 
 # VS Code settings
-.vscode/
+# .vscode/
 
 # Optional lock files (if using npm or yarn exclusively)
 yarn.lock
