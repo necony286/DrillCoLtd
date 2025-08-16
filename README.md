@@ -14,15 +14,15 @@ npm install
 
 Installs all required development dependencies.
 
-> **Note**: Development expects **Node.js 18.6.0**. An `.nvmrc` file is provided for use with [nvm](https://github.com/nvm-sh/nvm) or a similar manager.
+> **Note**: Development expects **Node.js 20.19.4**. An `.nvmrc` file is provided for use with [nvm](https://github.com/nvm-sh/nvm) or a similar manager.
 
 ### 📌 Node Version via nvm
 
-If you have [nvm](https://github.com/nvm-sh/nvm) installed, run the following commands before starting development. They ensure you are using Node **18.6.0** as defined in `.nvmrc`:
+If you have [nvm](https://github.com/nvm-sh/nvm) installed, run the following commands before starting development. They ensure you are using Node **20.19.4** as defined in `.nvmrc`:
 
 ```bash
-nvm install 18.6.0
-nvm use 18.6.0
+nvm install 20.19.4
+nvm use 20.19.4
 ```
 
 ---
