@@ -54,17 +54,25 @@
           </p>
         </div>
         <section class="slider-section">
-          <div id="main-slider" class="splide">
+          <div id="main-slider" class="splide" aria-label="Main slider">
             <div class="splide__track">
               <ul class="splide__list">
                 <li class="splide__slide">
                   <img src="assets/images/header-bg.jpg" alt="Slide 1" />
                 </li>
                 <li class="splide__slide">
-                  <img src="assets/images/header-bg.jpg" alt="Slide 2" />
+                  <img
+                    src="assets/images/header-bg.jpg"
+                    alt="Slide 2"
+                    loading="lazy"
+                  />
                 </li>
                 <li class="splide__slide">
-                  <img src="assets/images/header-bg.jpg" alt="Slide 3" />
+                  <img
+                    src="assets/images/header-bg.jpg"
+                    alt="Slide 3"
+                    loading="lazy"
+                  />
                 </li>
               </ul>
             </div>
@@ -100,15 +108,18 @@
                 class="contact-form__input"
                 id="email"
                 placeholder="you@example.com"
+                autocomplete="email"
                 required
               />
             </div>
-            <div aria-hidden="true" style="position: absolute; left: -5000px">
+            <div style="position: absolute; left: -5000px">
+              <label for="hp">Leave this field empty</label>
               <input
                 type="text"
                 name="b_aed9060ebda59851e1a51a45d_448f502d04"
                 tabindex="-1"
                 value=""
+                id="hp"
               />
             </div>
             <button type="submit" class="contact-form__button">
