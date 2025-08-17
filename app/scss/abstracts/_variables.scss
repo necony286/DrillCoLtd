@@ -54,8 +54,8 @@ $palette: (
   // typography colors
   typo:
     (
-      heading: #231f20,
-      text: #58595b,
+      heading: #fbffff,
+      text: #ebffff,
     )
 );
 
@@ -67,3 +67,28 @@ EXAMPLE
   color: _palette(typo, heading);
 }
 */
+
+$type-scale: (
+  h1: (
+    min: 2.8rem,
+    max: 4.2rem,
+  ),
+  h2: (
+    min: 2.2rem,
+    max: 3.2rem,
+  ),
+  lead: (
+    min: 1.4rem,
+    max: 2rem,
+  ),
+  brand: (
+    // NEW: navbar logo
+    min: 1.6rem,
+    max: 2.2rem,
+  ),
+  nav-link: (
+    // NEW: navbar links
+    min: 1.1rem,
+    max: 1.3rem,
+  ),
+);

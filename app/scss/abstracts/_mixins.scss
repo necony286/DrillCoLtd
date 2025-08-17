@@ -129,3 +129,11 @@ $max-vw: 1800px; // Screen max
     @include text-typo;
   }
 */
+
+@mixin type-scale($key) {
+  $conf: func.val(var.$type-scale, $key);
+  $min: func.val($conf, min);
+  $max: func.val($conf, max);
+
+  @include fluid-font($min, $max);
+}

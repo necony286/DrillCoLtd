@@ -1,3 +1,5 @@
+@use "../abstracts/all" as *;
+
 .navbar {
   width: 100%;
   padding: 1.5rem 2rem;
@@ -15,11 +17,24 @@
   }
 
   &__logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: white;
+    @include heading-typo;
+    @include type-scale(brand); // replaces hard-coded 1.8rem
+
     text-decoration: none;
     text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #{palette($palette, typo, heading)};
+    transition: color 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      color: #{palette($palette, primary, light)};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 3px;
+    }
   }
 
   &__links {
@@ -27,22 +42,29 @@
     list-style: none;
     margin: 0;
     padding: 0;
-  }
-
-  &__item {
-    &:not(:last-child) {
-      margin-right: 2.5rem;
-    }
+    gap: 2.5rem;
   }
 
   &__link {
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    transition: color 0.3s ease;
+    @include text-typo;
+    @include type-scale(nav-link); // replaces 1.1rem
 
-    &:hover {
-      color: #ccc; // Simple hover effect
+    text-decoration: none;
+    color: #{palette($palette, typo, text)};
+    transition: color 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      color: #{palette($palette, primary, main)};
+    }
+
+    &:active {
+      color: #{palette($palette, primary, dark)};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, secondary, main)};
+      outline-offset: 3px;
     }
   }
 }

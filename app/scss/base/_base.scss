@@ -48,7 +48,30 @@ html {
 }
 
 body {
-  @include text-typo; // Applies default font-family, weight, and color
+  @include text-typo;
 
-  height: 100%;
+  min-height: 100%;
+
+  // Fallback (single JPEG + overlay)
+  background: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)),
+    url("../images/header-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #000;
+
+  // Use WebP when supported (keeps overlay as first layer)
+  @supports (
+    background-image:
+      image-set(url("../images/header-bg.webp") type("image/webp"))
+  ) {
+    background: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)),
+      image-set(
+        url("../images/header-bg.webp") type("image/webp"),
+        url("../images/header-bg.jpg") type("image/jpeg")
+      );
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat, repeat-y;
+  }
 }

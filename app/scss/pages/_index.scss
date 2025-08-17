@@ -2,37 +2,13 @@
 
 header.header {
   height: 100dvh; // Use dynamic viewport height for better mobile support
+  min-height: 100svh; // Better mobile viewport stability
   position: relative;
   display: flex;
   align-items: center; // Vertically centers
   justify-content: center; // Horizontally centers
 
-  // Set the background image with fallbacks
-  // 1. Fallback for very old browsers
-  background-image: url("../images/header-bg.jpg");
-
-  // 2. Modern browsers will use this, picking the best format
-  background-image: image-set(
-    url("../images/header-bg.webp") type("image/webp"),
-    url("../images/header-bg.jpg") type("image/jpeg")
-  );
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(0 0 0 / 50%);
-    z-index: 0;
-  }
-
   .header__text-box {
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,12 +28,6 @@ header.header {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    @include respond(tab-land) {
-      flex: 1 1 50%;
-      align-items: flex-start;
-      text-align: left;
-    }
   }
 
   .main_heading {
@@ -69,17 +39,14 @@ header.header {
   }
 
   .sub_heading {
-    color: white;
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    @include text-typo;
+    @include type-scale(lead);
+
     margin-top: 1rem;
     text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
     max-width: 35rem;
     font-weight: 400;
     text-align: center;
-
-    @include respond(tab-land) {
-      text-align: left;
-    }
   }
 
   .slider-section {
@@ -117,23 +84,25 @@ main.main {
   max-width: 600px;
   margin: 0 auto;
   padding: 3rem;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgb(0 0 0 / 10%);
 
   &__title {
-    font-size: 3rem;
+    @include heading-typo;
+    @include type-scale(h2);
+
     margin-bottom: 1rem;
-    color: #333;
     text-align: center;
   }
 
   &__promo {
-    font-size: 1.2rem;
-    margin-bottom: 2.5rem;
+    @include text-typo;
+
     line-height: 1.6;
-    color: #555;
+
+    @include fluid-font(1.2rem, 1.4rem);
+
+    margin-bottom: 2.5rem;
     text-align: center;
+    color: #{palette($palette, typo, text)};
   }
 }
 
@@ -151,7 +120,7 @@ main.main {
     font-weight: bold;
     margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    color: #444;
+    color: #{palette($palette, typo, heading)};
   }
 
   &__input {
@@ -172,6 +141,13 @@ main.main {
       border-color: #555;
       box-shadow: 0 0 0 3px rgb(0 0 0 / 10%);
     }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 2px;
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, #{palette($palette, primary, main)} 30%, transparent);
+    }
   }
 
   &__button {
@@ -179,14 +155,19 @@ main.main {
     font-size: 1rem;
     font-weight: bold;
     color: white;
-    background-color: #333;
+    background-color: #{palette($palette, primary, main)};
     border: none;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: #555;
+      background-color: #{palette($palette, primary, dark)};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, secondary, main)};
+      outline-offset: 3px;
     }
   }
 }
