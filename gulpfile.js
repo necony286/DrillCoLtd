@@ -106,8 +106,6 @@ const vendors = () =>
     .src(paths.vendors.src)
     .pipe(plumber({ errorHandler }))
     .pipe(sourcemaps.init())
-    .pipe(babel({ presets: ["@babel/preset-env"] }))
-    .pipe(terser())
     .pipe(concat("vendors.min.js"))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.vendors.dest));
