@@ -124,7 +124,18 @@ const images = async (done) => {
       imageminMozjpeg({ quality: 80 }),
       imageminOptipng({ optimizationLevel: 5 }),
       imageminSvgo({
-        plugins: [{ name: "removeViewBox", active: false }],
+        plugins: [
+          {
+            name: "preset-default",
+            params: {
+              overrides: {
+                removeViewBox: false,
+                removeUnknownsAndDefaults: false,
+                cleanupIds: false,
+              },
+            },
+          },
+        ],
       }),
     ],
   });
