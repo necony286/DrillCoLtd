@@ -25,7 +25,13 @@ const paths = {
   html: { src: "./app/**/*.html", dest: "./build" },
   styles: { src: "./app/scss/main.scss", dest: "./build/assets/css" },
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
-  vendors: { src: "./app/js/vendors/**/*.js", dest: "./build/assets/js" },
+  vendors: {
+    src: [
+      "./node_modules/@splidejs/splide/dist/js/splide.min.js",
+      "./app/js/vendors/**/*.js",
+    ],
+    dest: "./build/assets/js",
+  },
   images: { src: "./app/images/**/*", dest: "./build/assets/images" },
   videos: { src: "./app/videos/**/*", dest: "./build/assets/videos" },
   fonts: {
