@@ -9,7 +9,7 @@ const browserSync = require("browser-sync").create();
 const postcss = require("gulp-postcss");
 const autoprefixer = require("autoprefixer");
 const cssnano = require("cssnano");
-const purgecss = require("@fullhuman/postcss-purgecss");
+const purgecss = require("@fullhuman/postcss-purgecss").default;
 const replace = require("gulp-replace");
 const plumber = require("gulp-plumber");
 const notify = require("gulp-notify").withReporter((options, callback) => {
