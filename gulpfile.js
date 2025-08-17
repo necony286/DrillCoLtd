@@ -44,7 +44,7 @@ const errorHandler = function (err) {
 
 const clean = async () => {
   const { deleteAsync } = await import("del");
-  return deleteAsync(["./build"]);
+  await deleteAsync(["./build"]);
 };
 
 const cacheBust = () => {
