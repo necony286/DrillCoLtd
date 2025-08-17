@@ -246,14 +246,12 @@ main.main {
     --card-pad: 0.9rem;
 
     position: relative;
-    padding: var(--card-pad);
+    padding: 0; // removed internal padding
     width: clamp(160px, 20vw, 200px);
     aspect-ratio: 3 / 4; // establishes consistent height
     flex: 0 0 auto; // prevent stretching
-    display: block;
     border-radius: 1rem;
-    overflow: hidden;
-    cursor: pointer;
+    overflow: hidden; // keeps zoom clipped to rounded corners
     background: rgb(255 255 255 / 4%);
     transition: transform 0.35s ease, box-shadow 0.35s ease,
       background 0.35s ease;
@@ -266,8 +264,7 @@ main.main {
 
   &__media {
     position: absolute;
-    inset: var(--card-pad);
-    border-radius: 0.6rem;
+    inset: 0; // now fills entire card
     overflow: hidden;
   }
 
@@ -279,17 +276,19 @@ main.main {
     object-fit: cover;
     filter: brightness(0.9);
     transition: transform 0.4s ease, filter 0.4s ease;
+    will-change: transform;
+    transform: scale(0.8);
 
     .featured-strains__card:hover & {
-      transform: scale(1.08);
+      transform: scale(0.9);
       filter: brightness(1);
     }
   }
 
   &__label {
     position: absolute;
-    left: calc(var(--card-pad) + 0.3rem);
-    bottom: calc(var(--card-pad) + 0.3rem);
+    left: var(--card-pad); // still spaced in from edges
+    bottom: var(--card-pad);
     padding: 0.45rem 0.85rem;
     border-radius: 0.65rem;
     background: rgb(0 0 0 / 55%);
