@@ -71,7 +71,10 @@ const styles = () =>
     .pipe(sass().on("error", sass.logError))
     .pipe(
       postcss([
-        purgecss({ content: ["./app/**/*.html", "./app/js/**/*.js"] }),
+        purgecss({
+          content: ["./app/**/*.html", "./app/js/**/*.js"],
+          safelist: [/^splide/, /^is-/],
+        }),
         autoprefixer(),
         cssnano(),
       ])
