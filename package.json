@@ -40,15 +40,14 @@
     "imagemin-webp": "^8.0.0",
     "sass": "^1.90.0",
     "stylelint": "^16.23.1",
-    "stylelint-config-standard": "^39.0.0",
     "stylelint-config-standard-scss": "^15.0.1"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "20.19.4"
   },
   "overrides": {
     "yargs-parser": "21.1.1",
-    "node.extend": {
+    "node.extend@*": {
       "is": "3.3.2"
     }
   }
