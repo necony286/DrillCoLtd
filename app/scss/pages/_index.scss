@@ -235,14 +235,14 @@ main.main {
   }
 
   &__grid {
-    display: grid;
+    /* replaced CSS Grid with flex for proper centering of incomplete last row */
+    display: flex;
+    flex-wrap: wrap;
     gap: 1.6rem;
-
-    /* Constrain column width; single item will not stretch full row */
-    grid-template-columns: repeat(auto-fit, minmax(170px, 240px));
-    justify-content: center; // center when last row not filled
-    padding-inline: 0;
+    justify-content: center;
+    align-items: stretch;
     margin-inline: auto;
+    padding-inline: 0;
 
     @include respond(tab-port) {
       gap: 2rem;
@@ -255,10 +255,9 @@ main.main {
   }
 
   &__card {
-    /* Prevent over-expansion */
-    width: 100%;
+    flex: 0 0 200px; // base width
     max-width: 240px;
-    aspect-ratio: 3 / 4; // a bit shorter than 4/5
+    aspect-ratio: 3 / 4;
     position: relative;
     border-radius: 1rem;
     overflow: hidden;

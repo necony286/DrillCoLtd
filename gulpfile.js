@@ -117,41 +117,78 @@ const images = async (done) => {
   const imageminMozjpeg = (await import("imagemin-mozjpeg")).default;
   const imageminOptipng = (await import("imagemin-optipng")).default;
   const imageminSvgo = (await import("imagemin-svgo")).default;
+  const { glob } = await import("glob");
 
-  const files = await imagemin([paths.images.src], {
-    destination: paths.images.dest,
-    plugins: [
-      imageminMozjpeg({ quality: 80 }),
-      imageminOptipng({ optimizationLevel: 5 }),
-      imageminSvgo({
+  const files = await glob(paths.images.src, { nodir: true });
+
+  await Promise.all(
+    files.map(async (file) => {
+      const buffer = await imagemin([file], {
         plugins: [
-          {
-            name: "preset-default",
-            params: {
-              overrides: {
-                removeViewBox: false,
-                removeUnknownsAndDefaults: false,
-                cleanupIds: false,
+          imageminMozjpeg({ quality: 80 }),
+          imageminOptipng({ optimizationLevel: 5 }),
+          imageminSvgo({
+            plugins: [
+              {
+                name: "preset-default",
+                params: {
+                  overrides: {
+                    removeViewBox: false,
+                    removeUnknownsAndDefaults: false,
+                    cleanupIds: false,
+                  },
+                },
               },
-            },
-          },
+            ],
+          }),
         ],
-      }),
-    ],
-  });
-  console.log(`Processed ${files.length} images.`);
+      });
+      if (!buffer.length) return;
+
+      const rel = path.relative(
+        path.join(process.cwd(), "app", "images"),
+        file
+      );
+      const outDir = path.join(paths.images.dest, path.dirname(rel));
+      if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+
+      const outFile = path.join(outDir, path.basename(rel));
+      fs.writeFileSync(outFile, buffer[0].data);
+    })
+  );
+  console.log(`Processed ${files.length} images (structure preserved).`);
   done();
 };
 
 const webpImages = async (done) => {
   const imagemin = (await import("imagemin")).default;
   const imageminWebp = (await import("imagemin-webp")).default;
+  const { glob } = await import("glob");
 
-  const files = await imagemin([paths.images.src], {
-    destination: paths.images.dest,
-    plugins: [imageminWebp({ quality: 80 })],
-  });
-  console.log(`Converted ${files.length} images to WebP.`);
+  const files = await glob(paths.images.src, { nodir: true });
+
+  await Promise.all(
+    files
+      .filter((f) => /\.(jpe?g|png)$/i.test(f))
+      .map(async (file) => {
+        const buffer = await imagemin([file], {
+          plugins: [imageminWebp({ quality: 80 })],
+        });
+        if (!buffer.length) return;
+
+        const rel = path.relative(
+          path.join(process.cwd(), "app", "images"),
+          file
+        );
+        const outDir = path.join(paths.images.dest, path.dirname(rel));
+        if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+
+        const base = path.basename(rel).replace(/\.(jpe?g|png)$/i, ".webp");
+        const outFile = path.join(outDir, base);
+        fs.writeFileSync(outFile, buffer[0].data);
+      })
+  );
+  console.log("Generated WebP images (structure preserved).");
   done();
 };
 
