@@ -1,8 +1,9 @@
 @use "../abstracts/all" as *;
 
 header.header {
-  height: 100dvh; // Use dynamic viewport height for better mobile support
-  min-height: 100svh; // Better mobile viewport stability
+  // height: 100dvh; // Use dynamic viewport height for better mobile support
+  // min-height: 100svh; // Better mobile viewport stability
+
   position: relative;
   display: flex;
   align-items: center; // Vertically centers
@@ -15,12 +16,15 @@ header.header {
     text-align: center;
     width: 90%;
     max-width: 1200px;
-    gap: 4rem; // Add gap for mobile view
+    gap: 5rem; // Add gap for mobile view
+    padding: 5rem 2rem 0;
+    margin-top: 8rem;
 
     @include respond(tab-land) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      margin-top: 16rem;
     }
   }
 
@@ -168,6 +172,166 @@ main.main {
     &:focus-visible {
       outline: 2px solid #{palette($palette, secondary, main)};
       outline-offset: 3px;
+    }
+  }
+}
+
+/* Featured strains (grid showcase) */
+.featured-strains {
+  margin: 3rem auto 5rem;
+  padding: 2rem 0;
+  width: 100%;
+  max-width: 1200px;
+  padding-inline: 1.6rem;
+
+  @include respond(tab-port) {
+    padding-inline: 3rem;
+    margin-top: 8rem;
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: center;
+    margin-bottom: 6.8rem;
+  }
+
+  &__title {
+    @include heading-typo;
+    @include type-scale(h2);
+
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  &__cta {
+    @include text-typo;
+    @include type-scale(nav-link); // assumes nav-link scale exists
+
+    text-decoration: none;
+    padding: 0.9rem 1.8rem;
+    border: 2px solid #{palette($palette, primary, main)};
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: transparent;
+    color: #{palette($palette, primary, light)};
+    transition: background-color 0.3s ease, color 0.3s ease,
+      border-color 0.3s ease;
+
+    &:hover,
+    &:focus-visible {
+      background: #{palette($palette, primary, main)};
+      color: #{palette($palette, typo, heading)};
+      border-color: #{palette($palette, primary, main)};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, secondary, main)};
+      outline-offset: 3px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    gap: 1.6rem;
+
+    /* Constrain column width; single item will not stretch full row */
+    grid-template-columns: repeat(auto-fit, minmax(170px, 240px));
+    justify-content: center; // center when last row not filled
+    padding-inline: 0;
+    margin-inline: auto;
+
+    @include respond(tab-port) {
+      gap: 2rem;
+    }
+
+    @include respond(tab-land) {
+      gap: 2.4rem;
+      margin-top: -2rem;
+    }
+  }
+
+  &__card {
+    /* Prevent over-expansion */
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 3 / 4; // a bit shorter than 4/5
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    background: rgb(255 255 255 / 4%);
+    backdrop-filter: blur(4px);
+    transition: transform 0.35s ease, box-shadow 0.35s ease,
+      background 0.35s ease;
+    isolation: isolate;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px -6px rgb(0 0 0 / 55%);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 3px;
+    }
+
+    &--highlight {
+      background: linear-gradient(
+          to bottom,
+          rgb(0 0 0 / 0%) 0%,
+          rgb(0 0 0 / 60%) 100%
+        ),
+        rgb(255 255 255 / 6%);
+    }
+
+    @include respond(tab-land) {
+      &--stagger {
+        margin-top: 7rem;
+      }
+    }
+  }
+
+  &__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: brightness(0.9);
+    transition: transform 0.4s ease, filter 0.4s ease;
+
+    .featured-strains__card:hover & {
+      transform: scale(1.08);
+      filter: brightness(1);
+    }
+  }
+
+  &__label {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.9rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 0.65rem;
+    background: rgb(0 0 0 / 55%);
+    backdrop-filter: blur(4px);
+
+    @include text-typo;
+
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+
+    @include respond(tab-port) {
+      .featured-strains__card:hover & {
+        opacity: 1;
+      }
     }
   }
 }
