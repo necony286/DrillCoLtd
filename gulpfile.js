@@ -24,6 +24,10 @@ const { globSync } = require("glob");
 const paths = {
   html: { src: "./app/**/*.html", dest: "./build" },
   styles: { src: "./app/scss/main.scss", dest: "./build/assets/css" },
+  vendorStyles: {
+    src: "./node_modules/@splidejs/splide/dist/css/splide.min.css",
+    dest: "./build/assets/css",
+  },
   scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
   vendors: {
     src: [
@@ -159,6 +163,7 @@ const createCopyTask = (taskName, pathsConfig) => (done) => {
 
 const videos = createCopyTask("videos", paths.videos);
 const fonts = createCopyTask("fonts", paths.fonts);
+const vendorStyles = createCopyTask("vendor styles", paths.vendorStyles);
 
 const favicon = () =>
   gulp.src(paths.favicon.src).pipe(gulp.dest(paths.favicon.dest));
@@ -198,6 +203,7 @@ const build = gulp.series(
   clean,
   gulp.parallel(
     html,
+    vendorStyles,
     styles,
     vendors,
     scripts,
@@ -223,6 +229,7 @@ exports.videos = videos;
 exports.fonts = fonts;
 exports.favicon = favicon;
 exports.html = html;
+exports.vendorStyles = vendorStyles;
 exports.cacheBust = cacheBust;
 exports.watch = watch;
 exports.build = build;
