@@ -71,85 +71,86 @@ header.header {
     font-weight: 400;
     text-align: center;
   }
+}
 
-  .contact-section {
-    max-width: 360px;
-    margin-top: 5rem;
+main.main {
+  padding: 5rem 2rem;
+}
+
+.contact-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 10%);
+
+  &__title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #333;
+    text-align: center;
+  }
+
+  &__promo {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    color: #555;
+    text-align: center;
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__group {
+    text-align: left;
+  }
+
+  &__label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #444;
+  }
+
+  &__input {
     width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #333;
 
-    @include respond(tab-land) {
-      max-width: 500px;
-      margin-top: 0;
-      flex-shrink: 0;
+    &::placeholder {
+      color: #999;
     }
 
-    &__title {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      color: white;
-      text-shadow: 0 1px 3px rgb(black, 0.7);
-    }
-
-    &__promo {
-      font-size: 1.2rem;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-      color: white;
-      text-shadow: 0 1px 3px rgb(black, 0.7);
+    &:focus {
+      outline: none;
+      border-color: #555;
+      box-shadow: 0 0 0 3px rgb(0 0 0 / 10%);
     }
   }
 
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  &__button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 
-    &__group {
-      text-align: left;
-    }
-
-    &__label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
-      color: #ddd;
-    }
-
-    &__input {
-      width: 100%;
-      padding: 0.8rem 1rem;
-      font-size: 1rem;
-      background-color: rgb(0 0 0 / 30%);
-      border: 1px solid #888;
-      border-radius: 4px;
-      color: white;
-
-      &::placeholder {
-        color: #bbb;
-      }
-
-      &:focus {
-        outline: none;
-        border-color: white;
-        box-shadow: 0 0 0 3px rgb(255 255 255 / 20%);
-      }
-    }
-
-    &__button {
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #333;
-      background-color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-
-      &:hover {
-        background-color: #ddd;
-      }
+    &:hover {
+      background-color: #555;
     }
   }
 }
