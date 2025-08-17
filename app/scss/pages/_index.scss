@@ -39,12 +39,12 @@ header.header {
     text-align: center;
     width: 90%;
     max-width: 1200px;
+    gap: 4rem; // Add gap for mobile view
 
     @include respond(tab-land) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      gap: 4rem;
     }
   }
 
@@ -52,6 +52,12 @@ header.header {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @include respond(tab-land) {
+      flex: 1 1 50%;
+      align-items: flex-start;
+      text-align: left;
+    }
   }
 
   .main_heading {
@@ -70,6 +76,32 @@ header.header {
     max-width: 35rem;
     font-weight: 400;
     text-align: center;
+
+    @include respond(tab-land) {
+      text-align: left;
+    }
+  }
+
+  .slider-section {
+    width: 100%;
+    max-width: 500px;
+
+    @include respond(tab-land) {
+      flex: 1 1 50%;
+      max-width: 600px;
+    }
+
+    .splide {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
+    }
+
+    .splide__slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
   }
 }
 
