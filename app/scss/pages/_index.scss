@@ -235,63 +235,40 @@ main.main {
   }
 
   &__grid {
-    /* replaced CSS Grid with flex for proper centering of incomplete last row */
     display: flex;
     flex-wrap: wrap;
     gap: 1.6rem;
     justify-content: center;
-    align-items: stretch;
-    margin-inline: auto;
-    padding-inline: 0;
-
-    @include respond(tab-port) {
-      gap: 2rem;
-    }
-
-    @include respond(tab-land) {
-      gap: 2.4rem;
-      margin-top: -2rem;
-    }
+    align-items: flex-start;
   }
 
   &__card {
-    flex: 0 0 200px; // base width
-    max-width: 240px;
-    aspect-ratio: 3 / 4;
+    --card-pad: 0.9rem;
+
     position: relative;
+    padding: var(--card-pad);
+    width: clamp(160px, 20vw, 200px);
+    aspect-ratio: 3 / 4; // establishes consistent height
+    flex: 0 0 auto; // prevent stretching
+    display: block;
     border-radius: 1rem;
     overflow: hidden;
     cursor: pointer;
     background: rgb(255 255 255 / 4%);
-    backdrop-filter: blur(4px);
     transition: transform 0.35s ease, box-shadow 0.35s ease,
       background 0.35s ease;
-    isolation: isolate;
 
     &:hover {
       transform: translateY(-4px);
       box-shadow: 0 10px 28px -6px rgb(0 0 0 / 55%);
     }
+  }
 
-    &:focus-visible {
-      outline: 2px solid #{palette($palette, primary, main)};
-      outline-offset: 3px;
-    }
-
-    &--highlight {
-      background: linear-gradient(
-          to bottom,
-          rgb(0 0 0 / 0%) 0%,
-          rgb(0 0 0 / 60%) 100%
-        ),
-        rgb(255 255 255 / 6%);
-    }
-
-    @include respond(tab-land) {
-      &--stagger {
-        margin-top: 7rem;
-      }
-    }
+  &__media {
+    position: absolute;
+    inset: var(--card-pad);
+    border-radius: 0.6rem;
+    overflow: hidden;
   }
 
   &__img {
@@ -300,7 +277,6 @@ main.main {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
     filter: brightness(0.9);
     transition: transform 0.4s ease, filter 0.4s ease;
 
@@ -312,8 +288,8 @@ main.main {
 
   &__label {
     position: absolute;
-    left: 0.9rem;
-    bottom: 0.9rem;
+    left: calc(var(--card-pad) + 0.3rem);
+    bottom: calc(var(--card-pad) + 0.3rem);
     padding: 0.45rem 0.85rem;
     border-radius: 0.65rem;
     background: rgb(0 0 0 / 55%);
@@ -325,12 +301,17 @@ main.main {
     letter-spacing: 0.5px;
     line-height: 1;
     pointer-events: none;
-    transition: opacity 0.35s ease;
+  }
 
-    @include respond(tab-port) {
-      .featured-strains__card:hover & {
-        opacity: 1;
-      }
+  @include respond(tab-port) {
+    &__card {
+      width: clamp(180px, 18vw, 220px);
+    }
+  }
+
+  @include respond(tab-land) {
+    &__card {
+      width: clamp(200px, 16vw, 240px);
     }
   }
 }
