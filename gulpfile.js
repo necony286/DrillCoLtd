@@ -105,9 +105,7 @@ const vendors = () =>
   gulp
     .src(paths.vendors.src)
     .pipe(plumber({ errorHandler }))
-    .pipe(sourcemaps.init())
     .pipe(concat("vendors.min.js"))
-    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.vendors.dest));
 
 const images = async (done) => {

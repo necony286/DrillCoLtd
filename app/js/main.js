@@ -4,6 +4,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const slider = document.querySelector('#main-slider');
   if (slider) {
-    new Splide(slider, { type: 'loop', autoplay: true }).mount();
+    new Splide(slider, {
+      type: 'loop',
+      autoplay: true,
+      arrows: false,
+      pagination: false,
+    }).mount();
   }
 });
