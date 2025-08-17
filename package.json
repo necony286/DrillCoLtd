@@ -45,11 +45,5 @@
   },
   "engines": {
     "node": "20.19.4"
-  },
-  "overrides": {
-    "yargs-parser": "21.1.1",
-    "node.extend@*": {
-      "is": "3.3.2"
-    }
   }
 }
