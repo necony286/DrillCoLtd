@@ -25,31 +25,22 @@ document.addEventListener("DOMContentLoaded", () => {
       arrows: false,
       pagination: false,
       pauseOnHover: true,
-      breakpoints: {
-        900: { perPage: 2 },
-        600: { perPage: 1 },
-      },
+      breakpoints: { 900: { perPage: 2 }, 600: { perPage: 1 } },
     }).mount();
-  }
 
-  // Expand / collapse review bodies
-  document.querySelectorAll(".review-card__expand").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const body = btn
-        .closest(".review-card")
-        .querySelector(".review-card__body");
-      const full = body.getAttribute("data-full");
-      const isOpen = btn.getAttribute("aria-expanded") === "true";
-      if (isOpen) {
-        // collapse
-        body.textContent = full.slice(0, 48) + "...";
-        btn.textContent = "More";
-        btn.setAttribute("aria-expanded", "false");
-      } else {
-        body.textContent = full;
-        btn.textContent = "Less";
-        btn.setAttribute("aria-expanded", "true");
-      }
+    // Simple expand/collapse
+    reviewsSlider.querySelectorAll(".review-card__expand").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const card = btn.closest(".review-card");
+        const body = card.querySelector(".review-card__body");
+        const full = body.getAttribute("data-full");
+        const collapsed = full.slice(0, 48) + "...";
+        const expanding = !card.classList.contains("is-expanded");
+        card.classList.toggle("is-expanded", expanding);
+        body.textContent = expanding ? full : collapsed;
+        btn.textContent = expanding ? "Less" : "More";
+        btn.setAttribute("aria-expanded", expanding ? "true" : "false");
+      });
     });
-  });
+  }
 });

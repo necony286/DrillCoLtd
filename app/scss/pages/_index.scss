@@ -333,8 +333,6 @@ main.main {
 
   @include respond(tab-port) {
     padding-inline: val($space, section-x-wide);
-
-    // removed old margin-top override
   }
 
   &__head {
@@ -359,8 +357,11 @@ main.main {
     opacity: 0.75;
   }
 
-  &__slider .splide__track {
-    overflow: hidden;
+  &__slider {
+    .splide__track {
+      overflow: hidden;
+      height: 140px;
+    }
   }
 }
 
@@ -394,7 +395,7 @@ main.main {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
 
     @include text-typo;
 
@@ -402,7 +403,7 @@ main.main {
   }
 
   &__stars-icon {
-    font-size: 1rem;
+    font-size: 1.1rem;
     background: linear-gradient(
       90deg,
       #{palette($palette, primary, light)},
@@ -415,21 +416,24 @@ main.main {
   &__rating-text {
     color: #{palette($palette, typo, text)};
     font-weight: 600;
+    font-size: 0.85rem;
   }
 
   &__headline {
     @include text-typo;
 
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     margin: 0;
   }
 
   &__body {
-    @include text-typo;
-
-    font-size: 0.95rem;
-    line-height: 1.45;
+    /* Multi-line clamp with standard + WebKit */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3; /* new spec syntax */
   }
 
   &__footer {
@@ -438,18 +442,18 @@ main.main {
     flex-wrap: wrap;
     gap: 0.6rem 0.9rem;
     align-items: center;
-    font-size: 0.75rem;
+    font-size: 0.82rem;
   }
 
   &__author {
     @include text-typo;
 
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.88rem;
   }
 
   &__verified {
-    font-size: 0.7rem;
+    font-size: 0.77rem;
     margin-left: 0.35rem;
     color: #{palette($palette, primary, main)};
   }
@@ -462,7 +466,7 @@ main.main {
     padding: 0.25rem 0.6rem;
     border-radius: 2rem;
     background: rgb(255 255 255 / 8%);
-    font-size: 0.7rem;
+    font-size: 0.77rem;
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
@@ -472,7 +476,7 @@ main.main {
     background: none;
     border: 1px solid rgb(255 255 255 / 18%);
     color: #{palette($palette, typo, text)};
-    font-size: 0.7rem;
+    font-size: 0.77rem;
     padding: 0.25rem 0.6rem;
     border-radius: 0.5rem;
     cursor: pointer;
@@ -485,13 +489,15 @@ main.main {
       outline-offset: 2px;
     }
   }
-}
 
-/* Splide review sizing */
-.review-section .splide__list {
-  align-items: stretch;
-}
+  &.is-expanded {
+    .review-card__body {
+      -webkit-line-clamp: unset;
+      line-clamp: unset;
+    }
 
-.review-section .splide__slide {
-  height: auto;
+    .review-card__expand::after {
+      content: " (Less)";
+    }
+  }
 }
