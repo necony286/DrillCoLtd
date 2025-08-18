@@ -1,13 +1,23 @@
 @use "../abstracts/all" as *;
 
-header.header {
-  // height: 100dvh; // Use dynamic viewport height for better mobile support
-  // min-height: 100svh; // Better mobile viewport stability
+:where(header.header .slider-section) > .splide > .splide__track {
+  aspect-ratio: 16/9;
+}
 
+/* Shared custom props */
+:root {
+  --elevate-tr: 0.35s ease;
+  --card-radius: 1rem;
+  --card-bg: rgb(255 255 255 / 4%);
+  --glass-bg: rgb(0 0 0 / 45%);
+  --section-max: 1200px;
+}
+
+header.header {
   position: relative;
   display: flex;
-  align-items: center; // Vertically centers
-  justify-content: center; // Horizontally centers
+  align-items: center;
+  justify-content: center;
 
   .header__text-box {
     display: flex;
@@ -15,16 +25,17 @@ header.header {
     align-items: center;
     text-align: center;
     width: 90%;
-    max-width: 1200px;
-    gap: 5rem; // Add gap for mobile view
+    max-width: var(--section-max);
+    gap: 4rem;
     padding: 5rem 2rem 0;
-    margin-top: 8rem;
+    margin-top: 7rem;
 
     @include respond(tab-land) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      margin-top: 16rem;
+      margin-top: 12rem;
+      gap: 5rem;
     }
   }
 
@@ -34,12 +45,10 @@ header.header {
     align-items: center;
   }
 
-  .main_heading {
-    img {
-      max-width: 500px;
-      width: 100%;
-      height: auto;
-    }
+  .main_heading img {
+    max-width: 480px;
+    width: 100%;
+    height: auto;
   }
 
   .sub_heading {
@@ -50,12 +59,11 @@ header.header {
     text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
     max-width: 35rem;
     font-weight: 400;
-    text-align: center;
   }
 
   .slider-section {
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
 
     @include respond(tab-land) {
       flex: 1 1 50%;
@@ -63,48 +71,46 @@ header.header {
     }
 
     .splide {
-      border-radius: 8px;
+      border-radius: 0.8rem;
       overflow: hidden;
       box-shadow: 0 10px 30px rgb(0 0 0 / 30%);
     }
 
-    .splide__track {
-      aspect-ratio: 16/9;
-    }
-
     .splide__slide img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
   }
 }
 
 main.main {
-  padding: 5rem 2rem;
+  padding: 4.5rem 2rem;
 }
 
+/* Contact section */
 .contact-section {
   max-width: 600px;
   margin: 0 auto;
-  padding: 3rem;
+  padding: 2.5rem 1.5rem;
 
   &__title {
     @include heading-typo;
     @include type-scale(h2);
 
-    margin-bottom: 1rem;
+    margin: 0 0 1rem;
     text-align: center;
   }
 
   &__promo {
     @include text-typo;
 
-    line-height: 1.6;
+    line-height: 1.55;
 
     @include fluid-font(1.2rem, 1.4rem);
 
-    margin-bottom: 2.5rem;
+    margin: 0 0 2.2rem;
     text-align: center;
     color: #{palette($palette, typo, text)};
   }
@@ -113,7 +119,7 @@ main.main {
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.4rem;
 
   &__group {
     text-align: left;
@@ -121,52 +127,51 @@ main.main {
 
   &__label {
     display: block;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
     font-size: 0.9rem;
     color: #{palette($palette, typo, heading)};
   }
 
   &__input {
     width: 100%;
-    padding: 0.8rem 1rem;
+    padding: 0.85rem 1rem;
     font-size: 1rem;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: #333;
+    background: #fff;
+    border: 1px solid #c9cfd2;
+    border-radius: 0.5rem;
+    color: #273034;
 
     &::placeholder {
-      color: #999;
+      color: #97a4ab;
     }
 
     &:focus {
       outline: none;
-      border-color: #555;
-      box-shadow: 0 0 0 3px rgb(0 0 0 / 10%);
+      border-color: #{palette($palette, primary, main)};
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, #{palette($palette, primary, main)} 35%, transparent);
     }
 
     &:focus-visible {
       outline: 2px solid #{palette($palette, primary, main)};
       outline-offset: 2px;
-      box-shadow: 0 0 0 3px
-        color-mix(in srgb, #{palette($palette, primary, main)} 30%, transparent);
     }
   }
 
   &__button {
-    padding: 0.8rem 1.5rem;
+    padding: 0.9rem 1.6rem;
     font-size: 1rem;
-    font-weight: bold;
-    color: white;
-    background-color: #{palette($palette, primary, main)};
+    font-weight: 600;
+    color: #fff;
+    background: #{palette($palette, primary, main)};
     border: none;
-    border-radius: 4px;
+    border-radius: 0.55rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background 0.3s;
 
     &:hover {
-      background-color: #{palette($palette, primary, dark)};
+      background: #{palette($palette, primary, dark)};
     }
 
     &:focus-visible {
@@ -176,25 +181,24 @@ main.main {
   }
 }
 
-/* Featured strains (grid showcase) */
+/* Featured strains */
 .featured-strains {
-  margin: 3rem auto 5rem;
-  padding: 2rem 0;
   width: 100%;
-  max-width: 1200px;
-  padding-inline: 1.6rem;
+  max-width: var(--section-max);
+  margin: 3.5rem auto 5rem;
+  padding: 0 1.6rem;
 
   @include respond(tab-port) {
     padding-inline: 3rem;
-    margin-top: 8rem;
+    margin-top: 6rem;
   }
 
   &__head {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1.1rem;
     align-items: center;
-    margin-bottom: 6.8rem;
+    margin-bottom: 4.5rem;
   }
 
   &__title {
@@ -207,10 +211,10 @@ main.main {
 
   &__cta {
     @include text-typo;
-    @include type-scale(nav-link); // assumes nav-link scale exists
+    @include type-scale(nav-link);
 
     text-decoration: none;
-    padding: 0.9rem 1.8rem;
+    padding: 0.85rem 1.7rem;
     border: 2px solid #{palette($palette, primary, main)};
     border-radius: 999px;
     letter-spacing: 0.08em;
@@ -218,8 +222,7 @@ main.main {
     font-weight: 600;
     background: transparent;
     color: #{palette($palette, primary, light)};
-    transition: background-color 0.3s ease, color 0.3s ease,
-      border-color 0.3s ease;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
 
     &:hover,
     &:focus-visible {
@@ -237,58 +240,56 @@ main.main {
   &__grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.6rem;
+    gap: 1.4rem 1.6rem;
     justify-content: center;
     align-items: flex-start;
   }
 
   &__card {
-    --card-pad: 0.9rem;
-
     position: relative;
-    padding: 0; // removed internal padding
     width: clamp(160px, 20vw, 200px);
-    aspect-ratio: 3 / 4; // establishes consistent height
-    flex: 0 0 auto; // prevent stretching
-    border-radius: 1rem;
-    overflow: hidden; // keeps zoom clipped to rounded corners
-    background: rgb(255 255 255 / 4%);
-    transition: transform 0.35s ease, box-shadow 0.35s ease,
-      background 0.35s ease;
+    aspect-ratio: 3/4;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    background: var(--card-bg);
+    transition: transform var(--elevate-tr), box-shadow var(--elevate-tr),
+      background var(--elevate-tr);
 
     &:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 28px -6px rgb(0 0 0 / 55%);
+      box-shadow: 0 10px 26px -8px rgb(0 0 0 / 55%);
     }
   }
 
   &__media {
     position: absolute;
-    inset: 0; // now fills entire card
+    inset: 0;
     overflow: hidden;
   }
 
   &__img {
-    position: absolute;
-    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.9);
-    transition: transform 0.4s ease, filter 0.4s ease;
-    will-change: transform;
-    transform: scale(0.8);
+    filter: brightness(0.92);
+    transform: scale(1);
+    transition: transform 0.5s ease, filter 0.5s ease;
 
     .featured-strains__card:hover & {
-      transform: scale(0.9);
+      transform: scale(1.06);
       filter: brightness(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+      transform: none;
     }
   }
 
   &__label {
     position: absolute;
-    left: var(--card-pad); // still spaced in from edges
-    bottom: var(--card-pad);
+    left: 0.75rem;
+    bottom: 0.75rem;
     padding: 0.45rem 0.85rem;
     border-radius: 0.65rem;
     background: rgb(0 0 0 / 55%);
@@ -313,4 +314,174 @@ main.main {
       width: clamp(200px, 16vw, 240px);
     }
   }
+}
+
+/* Reviews */
+.review-section {
+  width: 100%;
+  max-width: var(--section-max);
+  margin: 5rem auto 4rem;
+  padding: 0 1.6rem;
+
+  @include respond(tab-port) {
+    margin-top: 6.5rem;
+  }
+
+  &__head {
+    text-align: center;
+    margin-bottom: 2.8rem;
+  }
+
+  &__title {
+    @include heading-typo;
+    @include type-scale(h2);
+
+    margin: 0 0 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  &__note {
+    @include text-typo;
+
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  &__slider .splide__track {
+    overflow: hidden;
+  }
+}
+
+/* Review card */
+.review-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1.35rem 1.4rem 1.1rem;
+  border-radius: var(--card-radius);
+  background: var(--glass-bg);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgb(255 255 255 / 6%);
+  height: 100%;
+  transition: transform var(--elevate-tr), box-shadow var(--elevate-tr),
+    background var(--elevate-tr);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 22px -6px rgb(0 0 0 / 55%);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  &__stars {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+
+    @include text-typo;
+
+    letter-spacing: 0.05em;
+  }
+
+  &__stars-icon {
+    font-size: 1rem;
+    background: linear-gradient(
+      90deg,
+      #{palette($palette, primary, light)},
+      #{palette($palette, primary, main)}
+    );
+    background-clip: text;
+    color: transparent;
+  }
+
+  &__rating-text {
+    color: #{palette($palette, typo, text)};
+    font-weight: 600;
+  }
+
+  &__headline {
+    @include text-typo;
+
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  &__body {
+    @include text-typo;
+
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  &__footer {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.9rem;
+    align-items: center;
+    font-size: 0.75rem;
+  }
+
+  &__author {
+    @include text-typo;
+
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+
+  &__verified {
+    font-size: 0.7rem;
+    margin-left: 0.35rem;
+    color: #{palette($palette, primary, main)};
+  }
+
+  &__date {
+    opacity: 0.65;
+  }
+
+  &__tag {
+    padding: 0.25rem 0.6rem;
+    border-radius: 2rem;
+    background: rgb(255 255 255 / 8%);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__expand {
+    margin-left: auto;
+    background: none;
+    border: 1px solid rgb(255 255 255 / 18%);
+    color: #{palette($palette, typo, text)};
+    font-size: 0.7rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      background: rgb(255 255 255 / 14%);
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* Splide review sizing */
+.review-section .splide__list {
+  align-items: stretch;
+}
+
+.review-section .splide__slide {
+  height: auto;
 }
