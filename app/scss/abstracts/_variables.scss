@@ -59,15 +59,23 @@ $palette: (
     )
 );
 
-/*
-EXAMPLE
+// Spacing scale (use val($space, key))
+$space: (
+  0: 0,
+  xs: 0.4rem,
+  sm: 0.8rem,
+  md: 1.2rem,
+  lg: 2rem,
+  xl: 3rem,
+  2xl: 4rem,
+  section-y: 15rem,
+  // unified vertical spacing between sections
+  section-x: 1.6rem,
+  // default horizontal padding
+  section-x-wide: 3rem // tablet+ horizontal padding,,,,,,,,
+);
 
-.example {
-  background: _palette(secondary, light);
-  color: _palette(typo, heading);
-}
-*/
-
+// TYPE SCALING
 $type-scale: (
   h1: (
     min: 2.8rem,

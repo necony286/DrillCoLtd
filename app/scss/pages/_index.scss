@@ -89,111 +89,23 @@ main.main {
   padding: 4.5rem 2rem;
 }
 
-/* Contact section */
-.contact-section {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem;
-
-  &__title {
-    @include heading-typo;
-    @include type-scale(h2);
-
-    margin: 0 0 1rem;
-    text-align: center;
-  }
-
-  &__promo {
-    @include text-typo;
-
-    line-height: 1.55;
-
-    @include fluid-font(1.2rem, 1.4rem);
-
-    margin: 0 0 2.2rem;
-    text-align: center;
-    color: #{palette($palette, typo, text)};
-  }
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-
-  &__group {
-    text-align: left;
-  }
-
-  &__label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.45rem;
-    font-size: 0.9rem;
-    color: #{palette($palette, typo, heading)};
-  }
-
-  &__input {
-    width: 100%;
-    padding: 0.85rem 1rem;
-    font-size: 1rem;
-    background: #fff;
-    border: 1px solid #c9cfd2;
-    border-radius: 0.5rem;
-    color: #273034;
-
-    &::placeholder {
-      color: #97a4ab;
-    }
-
-    &:focus {
-      outline: none;
-      border-color: #{palette($palette, primary, main)};
-      box-shadow: 0 0 0 3px
-        color-mix(in srgb, #{palette($palette, primary, main)} 35%, transparent);
-    }
-
-    &:focus-visible {
-      outline: 2px solid #{palette($palette, primary, main)};
-      outline-offset: 2px;
-    }
-  }
-
-  &__button {
-    padding: 0.9rem 1.6rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
-    background: #{palette($palette, primary, main)};
-    border: none;
-    border-radius: 0.55rem;
-    cursor: pointer;
-    transition: background 0.3s;
-
-    &:hover {
-      background: #{palette($palette, primary, dark)};
-    }
-
-    &:focus-visible {
-      outline: 2px solid #{palette($palette, secondary, main)};
-      outline-offset: 3px;
-    }
-  }
-}
-
 /* Featured strains */
 .featured-strains {
   width: 100%;
   max-width: var(--section-max);
-  margin: 3.5rem auto 5rem;
-  padding: 0 1.6rem;
+
+  // unified external spacing
+  margin: val($space, section-y) auto;
+  padding: 0 val($space, section-x);
 
   @include respond(tab-port) {
-    padding-inline: 3rem;
-    margin-top: 6rem;
+    padding-inline: val($space, section-x-wide);
+
+    // remove old extra margin-top to keep uniform rhythm
   }
 
   &__head {
+    // keep internal layout; no external section margin differences
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
@@ -316,15 +228,113 @@ main.main {
   }
 }
 
+/* Contact section */
+.contact-section {
+  max-width: 600px;
+  margin: val($space, section-y) auto;
+  padding: 0 val($space, section-x);
+
+  @include respond(tab-port) {
+    padding-inline: val($space, section-x-wide);
+  }
+
+  &__title {
+    @include heading-typo;
+    @include type-scale(h2);
+
+    margin: 0 0 1rem;
+    text-align: center;
+  }
+
+  &__promo {
+    @include text-typo;
+
+    line-height: 1.55;
+
+    @include fluid-font(1.2rem, 1.4rem);
+
+    margin: 0 0 2.2rem;
+    text-align: center;
+    color: #{palette($palette, typo, text)};
+  }
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+
+  &__group {
+    text-align: left;
+  }
+
+  &__label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.45rem;
+    font-size: 0.9rem;
+    color: #{palette($palette, typo, heading)};
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 1rem;
+    background: #fff;
+    border: 1px solid #c9cfd2;
+    border-radius: 0.5rem;
+    color: #273034;
+
+    &::placeholder {
+      color: #97a4ab;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #{palette($palette, primary, main)};
+      box-shadow: 0 0 0 3px
+        color-mix(in srgb, #{palette($palette, primary, main)} 35%, transparent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 2px;
+    }
+  }
+
+  &__button {
+    padding: 0.9rem 1.6rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: #{palette($palette, primary, main)};
+    border: none;
+    border-radius: 0.55rem;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:hover {
+      background: #{palette($palette, primary, dark)};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #{palette($palette, secondary, main)};
+      outline-offset: 3px;
+    }
+  }
+}
+
 /* Reviews */
 .review-section {
   width: 100%;
   max-width: var(--section-max);
-  margin: 5rem auto 4rem;
-  padding: 0 1.6rem;
+  margin: val($space, section-y) auto;
+  padding: 0 val($space, section-x);
 
   @include respond(tab-port) {
-    margin-top: 6.5rem;
+    padding-inline: val($space, section-x-wide);
+
+    // removed old margin-top override
   }
 
   &__head {
