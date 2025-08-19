@@ -78,7 +78,7 @@ $min-vw: 575.98px; // Screen min
 $max-vw: 1800px; // Screen max
 
 @function _strip-unit($value) {
-  // use math.div to silence slash-divprecation
+  // use math.div to silence slash-division deprecation
   @return math.div($value, ($value * 0 + 1));
 }
 

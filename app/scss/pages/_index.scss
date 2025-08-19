@@ -52,7 +52,6 @@ header.header {
   }
 
   .sub_heading {
-    // Declarations BEFORE mixins (fix Sass mixed-decls deprecation)
     margin-top: 1rem;
     text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
     max-width: 35rem;
@@ -115,17 +114,14 @@ main.main {
   }
 
   &__title {
-    @include heading-typo;
-    @include type-scale(h2);
-
     margin: 0;
     letter-spacing: 0.5px;
+
+    @include heading-typo;
+    @include type-scale(h2);
   }
 
   &__cta {
-    @include text-typo;
-    @include type-scale(nav-link);
-
     text-decoration: none;
     padding: 0.85rem 1.7rem;
     border: 2px solid #{palette($palette, primary, main)};
@@ -136,6 +132,9 @@ main.main {
     background: transparent;
     color: #{palette($palette, primary, light)};
     transition: background 0.3s, color 0.3s, border-color 0.3s;
+
+    @include text-typo;
+    @include type-scale(nav-link);
 
     &:hover,
     &:focus-visible {
@@ -202,6 +201,7 @@ main.main {
   }
 
   &__label {
+    // (no mixin after declarations needed reorder retained)
     position: absolute;
     left: 0.75rem;
     bottom: 0.75rem;
@@ -209,13 +209,12 @@ main.main {
     border-radius: 0.65rem;
     background: rgb(0 0 0 / 55%);
     backdrop-filter: blur(4px);
-
-    @include text-typo;
-
     font-size: 0.95rem;
     letter-spacing: 0.5px;
     line-height: 1;
     pointer-events: none;
+
+    @include text-typo;
   }
 
   @include respond(tab-port) {
@@ -242,23 +241,21 @@ main.main {
   }
 
   &__title {
-    @include heading-typo;
-    @include type-scale(h2);
-
     margin: 0 0 1rem;
     text-align: center;
+
+    @include heading-typo;
+    @include type-scale(h2);
   }
 
   &__promo {
-    @include text-typo;
-
     line-height: 1.55;
-
-    @include fluid-font(1.2rem, 1.4rem);
-
     margin: 0 0 2.2rem;
     text-align: center;
     color: #{palette($palette, typo, text)};
+
+    @include text-typo;
+    @include fluid-font(1.2rem, 1.4rem);
   }
 }
 
@@ -344,20 +341,20 @@ main.main {
   }
 
   &__title {
-    @include heading-typo;
-    @include type-scale(h2);
-
     margin: 0 0 0.75rem;
     letter-spacing: 0.5px;
+
+    @include heading-typo;
+    @include type-scale(h2);
   }
 
   &__note {
-    @include text-typo;
-
     font-size: 0.95rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     opacity: 0.75;
+
+    @include text-typo;
   }
 
   &__slider {
@@ -531,17 +528,17 @@ main.main {
   }
 
   &__title {
+    margin: 0 0 1rem;
+
     @include heading-typo;
     @include type-scale(h2);
-
-    margin: 0 0 1rem;
   }
 
   &__address {
-    @include text-typo;
-
     font-size: 1rem;
     line-height: 1.4;
+
+    @include text-typo;
   }
 
   &__copy {
