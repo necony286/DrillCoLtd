@@ -502,6 +502,87 @@
             </div>
           </div>
         </section>
+
+        <!-- Location / Map -->
+        <section class="location-section" id="location">
+          <div class="location-section__head">
+            <h2 class="location-section__title">Find Us</h2>
+            <p class="location-section__address">
+              <span class="location-section__addr-text" data-address
+                >123 Example Street, City, STATE 12345, Country</span
+              >
+              <button
+                type="button"
+                class="location-section__copy"
+                data-copy-address
+                aria-live="polite"
+              >
+                Copy address
+              </button>
+            </p>
+          </div>
+
+          <div class="location-section__actions">
+            <a
+              class="location-section__btn"
+              data-directions
+              href="https://www.google.com/maps/dir/?api=1&destination=37.422%2C-122.084"
+              target="_blank"
+              rel="noopener"
+              >Get directions</a
+            >
+            <a
+              class="location-section__btn"
+              data-open
+              href="https://maps.google.com/?q=37.422,-122.084"
+              target="_blank"
+              rel="noopener"
+              >Open in Maps</a
+            >
+            <a class="location-section__btn" data-phone href="tel:+11234567890"
+              >Call now</a
+            >
+          </div>
+
+          <div class="location-section__map-wrapper" data-map-wrapper>
+            <button
+              type="button"
+              class="location-section__consent"
+              data-map-consent
+              aria-label="Load interactive Google Map"
+            >
+              <img
+                class="location-section__placeholder"
+                src="assets/images/map-placeholder.jpg"
+                alt="Map showing DRILL WEED SHOP at 123 Example Street, City"
+                loading="lazy"
+                decoding="async"
+                width="640"
+                height="360"
+              />
+              <span class="location-section__consent-text"
+                >Load map from Google</span
+              >
+            </button>
+            <div
+              class="location-section__map"
+              data-map
+              hidden
+              aria-label="Interactive map displaying DRILL WEED SHOP location"
+            ></div>
+            <noscript>
+              <p>
+                JavaScript disabled.
+                <a
+                  href="https://maps.google.com/?q=37.422,-122.084"
+                  target="_blank"
+                  rel="noopener"
+                  >Open in Google Maps</a
+                >
+              </p>
+            </noscript>
+          </div>
+        </section>
       </div>
     </main>
 
