@@ -598,6 +598,7 @@ main.main {
 
   &__map-wrapper {
     position: relative;
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
     aspect-ratio: 16 / 9;
@@ -605,9 +606,7 @@ main.main {
     overflow: hidden;
     background: rgb(255 255 255 / 6%);
     backdrop-filter: blur(4px);
-
-    // ensure visible even if placeholder image missing
-    min-height: 360px;
+    min-height: clamp(200px, 55vw, 360px);
   }
 
   &__consent-text {
