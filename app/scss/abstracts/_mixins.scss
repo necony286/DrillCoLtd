@@ -1,6 +1,7 @@
 // Scss mixins
 @use "functions" as func;
 @use "variables" as var;
+@use "sass:math";
 
 // MEDIA QUERY MANAGER
 
@@ -77,8 +78,8 @@ $min-vw: 575.98px; // Screen min
 $max-vw: 1800px; // Screen max
 
 @function _strip-unit($value) {
-  // Renamed to _strip-unit
-  @return $value / ($value * 0 + 1);
+  // use math.div to silence slash-divprecation
+  @return math.div($value, ($value * 0 + 1));
 }
 
 @mixin fluid-font($min-font-size, $max-font-size) {

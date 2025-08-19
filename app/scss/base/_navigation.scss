@@ -17,14 +17,15 @@
   }
 
   &__logo {
-    @include heading-typo;
-    @include type-scale(brand); // replaces hard-coded 1.8rem
-
+    // Move plain declarations BEFORE mixins that output @media to avoid mixed-decls warning
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: #{palette($palette, typo, heading)};
     transition: color 0.3s;
+
+    @include heading-typo;
+    @include type-scale(brand); // replaces hard-coded 1.8rem
 
     &:hover,
     &:focus-visible {
@@ -46,12 +47,13 @@
   }
 
   &__link {
-    @include text-typo;
-    @include type-scale(nav-link); // replaces 1.1rem
-
+    // Plain declarations first
     text-decoration: none;
     color: #{palette($palette, typo, text)};
     transition: color 0.3s;
+
+    @include text-typo;
+    @include type-scale(nav-link); // replaces 1.1rem
 
     &:hover,
     &:focus-visible {
