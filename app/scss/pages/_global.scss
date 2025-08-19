@@ -203,13 +203,19 @@ body.is-locked {
   &__utility {
     display: grid;
     gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: 1fr;
+
+    @include respond(phone-port) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   &__block {
     display: flex;
     flex-direction: column;
     gap: 0.65rem;
+    align-items: center;
+    text-align: center;
   }
 
   &__heading {
@@ -253,11 +259,17 @@ body.is-locked {
     letter-spacing: 0.05em;
   }
 
-  &__legal a {
+  &__legal {
+    margin-top: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
     font-size: 0.75rem;
   }
 
-  @media (width >= 800px) {
+  @include respond(tab-port) {
     &__inner {
       grid-template-columns: 1fr;
     }

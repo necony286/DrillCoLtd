@@ -642,6 +642,7 @@ main.main {
   }
 
   &__map-wrapper {
+    // Keep responsive but rely on your breakpoints for adjustments
     position: relative;
     width: 100%;
     max-width: 900px;
@@ -651,7 +652,15 @@ main.main {
     overflow: hidden;
     background: rgb(255 255 255 / 6%);
     backdrop-filter: blur(4px);
-    min-height: clamp(200px, 55vw, 360px);
+    min-height: 240px;
+
+    @include respond(phone-land) {
+      min-height: 300px;
+    }
+
+    @include respond(tab-port) {
+      min-height: 360px;
+    }
   }
 
   &__consent-text {
