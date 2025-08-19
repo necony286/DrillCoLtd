@@ -1,5 +1,5 @@
 // Main application scripts
-/* global Splide, google */ // added google
+/* global Splide */ // removed unused 'google'
 
 document.addEventListener("DOMContentLoaded", () => {
   const mainSlider = document.getElementById("main-slider");
@@ -113,7 +113,10 @@ document.addEventListener("DOMContentLoaded", () => {
     loadGoogleScript(initMap);
     try {
       localStorage.setItem("mapConsent", "1");
-    } catch {}
+    } catch (e) {
+      // Ignore quota / privacy mode errors
+      void e;
+    }
   }
 
   if (consentBtn) {
@@ -139,4 +142,120 @@ document.addEventListener("DOMContentLoaded", () => {
       io.observe(mapWrapper);
     }
   }
+
+  // Global Age Gate
+  (function ageGate() {
+    const modal = document.getElementById("age-gate");
+    if (!modal) return;
+
+    const KEY = "ageGateVerifiedAt";
+    const COOKIE = "ageGate";
+    const DAYS = 7;
+    const TTL = DAYS * 86400000;
+    const now = Date.now();
+
+    const getCookie = (n) =>
+      document.cookie
+        .split(";")
+        .map((c) => c.trim())
+        .find((c) => c.startsWith(n + "="))
+        ?.split("=")[1];
+
+    const lsStamp = (() => {
+      try {
+        return localStorage.getItem(KEY);
+      } catch {
+        return null;
+      }
+    })();
+    const cookieStamp = getCookie(COOKIE);
+    const stamp = parseInt(lsStamp || cookieStamp || "0", 10);
+
+    if (stamp && now - stamp < TTL) return; // already verified
+
+    let prevFocus = document.activeElement;
+    const yesBtn = modal.querySelector("[data-age-yes]");
+    const noBtn = modal.querySelector("[data-age-no]");
+
+    function setVerified() {
+      const t = Date.now();
+      try {
+        localStorage.setItem(KEY, String(t));
+      } catch (err) {
+        void err; // ignore quota / privacy errors
+      }
+      document.cookie = `${COOKIE}=${t};path=/;max-age=${TTL / 1000}`;
+    }
+
+    function openModal() {
+      modal.hidden = false;
+      modal.classList.add("is-open");
+      document.body.classList.add("is-locked");
+      requestAnimationFrame(() => (yesBtn || modal).focus());
+      trapFocus();
+    }
+
+    function closeModal() {
+      modal.classList.remove("is-open");
+      document.body.classList.remove("is-locked");
+      if (prevFocus && prevFocus.focus) prevFocus.focus();
+      setTimeout(() => {
+        modal.hidden = true;
+      }, 300);
+      releaseTrap();
+    }
+
+    yesBtn?.addEventListener("click", () => {
+      setVerified();
+      closeModal();
+    });
+
+    noBtn?.addEventListener("click", () => {
+      window.location.href = "https://www.google.com";
+    });
+
+    // Focus trap
+    let trapHandler;
+    function trapFocus() {
+      const focusables = Array.from(
+        modal.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("disabled"));
+      if (!focusables.length) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      trapHandler = (e) => {
+        if (e.key !== "Tab") return;
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      };
+      document.addEventListener("keydown", trapHandler);
+    }
+    function releaseTrap() {
+      if (trapHandler) document.removeEventListener("keydown", trapHandler);
+    }
+
+    // Cross‑tab sync
+    window.addEventListener("storage", (e) => {
+      if (e.key === KEY && e.newValue) {
+        const ts = parseInt(e.newValue, 10);
+        if (
+          ts &&
+          Date.now() - ts < TTL &&
+          modal.classList.contains("is-open")
+        ) {
+          closeModal();
+        }
+      }
+    });
+
+    // Defer to next paint
+    requestAnimationFrame(openModal);
+  })();
 });

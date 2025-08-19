@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPYSB5CEGQ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-FPYSB5CEGQ"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-FPYSB5CEGQ');
+      gtag("config", "G-FPYSB5CEGQ");
     </script>
     <link rel="stylesheet" href="assets/css/splide.min.css?cb=0" />
     <link rel="stylesheet" href="assets/css/styles.min.css?cb=0" />
@@ -42,6 +47,42 @@
         </p>
       </div>
     </main>
+    <!-- Age Gate Modal -->
+    <div
+      class="age-modal"
+      id="age-gate"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="age-gate-title"
+      aria-describedby="age-gate-desc"
+      hidden
+    >
+      <div class="age-modal__dialog">
+        <h2 id="age-gate-title" class="age-modal__title">
+          Are you over 21 years of age?
+        </h2>
+        <p id="age-gate-desc" class="age-modal__text">
+          You must verify your age to enter this site.
+        </p>
+        <div class="age-modal__actions">
+          <button
+            type="button"
+            class="age-modal__btn age-modal__btn--yes"
+            data-age-yes
+          >
+            Yes
+          </button>
+          <button
+            type="button"
+            class="age-modal__btn age-modal__btn--no"
+            data-age-no
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /Age Gate Modal -->
     <script src="assets/js/vendors.min.js?cb=0"></script>
     <script src="assets/js/app.min.js?cb=0"></script>
   </body>

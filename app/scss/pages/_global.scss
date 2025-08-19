@@ -1,1 +1,109 @@
+@use "../abstracts/all" as *;
+
 // global page styling
+
+/* Age gate modal (global) */
+.age-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  background: rgb(0 0 0 / 75%);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+
+  &[hidden] {
+    display: flex;
+  } // keep layout but remain hidden for a11y
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  &__dialog {
+    width: 100%;
+    max-width: 420px;
+    background: linear-gradient(
+      145deg,
+      rgb(25 30 32 / 92%),
+      rgb(20 24 26 / 92%)
+    );
+    border: 1px solid rgb(255 255 255 / 10%);
+    border-radius: 1rem;
+    padding: 2.2rem 2rem 2rem;
+    box-shadow: 0 18px 48px -12px rgb(0 0 0 / 65%);
+  }
+
+  &__title {
+    @include heading-typo;
+
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    margin: 0 0 1rem;
+    text-align: center;
+  }
+
+  &__text {
+    @include text-typo;
+
+    font-size: 1.05rem;
+    line-height: 1.45;
+    text-align: center;
+    margin: 0 0 1.75rem;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__btn {
+    @include text-typo;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 0.85rem 1.9rem;
+    border-radius: 999px;
+    border: 2px solid #{palette($palette, primary, main)};
+    background: transparent;
+    color: #{palette($palette, primary, light)};
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      background: #{palette($palette, primary, main)};
+      color: #{palette($palette, typo, heading)};
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 3px;
+    }
+
+    &--no {
+      border-color: #{palette($palette, secondary, main)};
+      color: #{palette($palette, secondary, light)};
+
+      &:hover,
+      &:focus-visible {
+        background: #{palette($palette, secondary, main)};
+        color: #{palette($palette, typo, heading)};
+        outline: 2px solid #{palette($palette, secondary, main)};
+      }
+    }
+  }
+}
+
+body.is-locked {
+  overflow: hidden;
+  touch-action: none;
+}

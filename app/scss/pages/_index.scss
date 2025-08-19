@@ -596,6 +596,15 @@ main.main {
     backdrop-filter: blur(4px);
   }
 
+  &__consent-text {
+    position: relative;
+    z-index: 1;
+    background: rgb(0 0 0 / 55%);
+    padding: 0.6rem 1rem;
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+  }
+
   &__consent {
     position: absolute;
     inset: 0;
@@ -645,15 +654,6 @@ main.main {
     height: 100%;
     object-fit: cover;
     filter: brightness(0.8) saturate(1.1);
-  }
-
-  &__consent-text {
-    position: relative;
-    z-index: 1;
-    background: rgb(0 0 0 / 55%);
-    padding: 0.6rem 1rem;
-    border-radius: 0.6rem;
-    font-size: 0.9rem;
   }
 
   &__map {
