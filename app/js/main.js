@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const MAP_NAME = loc.dataset.name || "Location";
     const MAP_ZOOM = parseInt(loc.dataset.zoom || "14", 10);
 
-    const addrEl = document.querySelector("[data-address]");
+    const addrEl = loc.querySelector("[data-address]"); // scoped (was document.querySelector)
     if (addrEl && MAP_ADDRESS) addrEl.textContent = MAP_ADDRESS;
 
     const phoneLink = document.querySelector("[data-phone]");
