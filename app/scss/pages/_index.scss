@@ -52,13 +52,14 @@ header.header {
   }
 
   .sub_heading {
-    @include text-typo;
-    @include type-scale(lead);
-
+    // Declarations BEFORE mixins (fix Sass mixed-decls deprecation)
     margin-top: 1rem;
     text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
     max-width: 35rem;
     font-weight: 400;
+
+    @include text-typo;
+    @include type-scale(lead);
   }
 
   .slider-section {
