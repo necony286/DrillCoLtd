@@ -2,11 +2,16 @@
 /* global Splide */ // removed unused 'google'
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Pause autoplay if user prefers reduced motion
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
   const mainSlider = document.getElementById("main-slider");
   if (mainSlider) {
     new Splide(mainSlider, {
       type: "loop",
-      autoplay: true,
+      autoplay: !prefersReduced,
       arrows: false,
       pagination: false,
       cover: true,
@@ -21,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       perPage: 3,
       perMove: 1,
       gap: "1.5rem",
-      autoplay: true,
+      autoplay: !prefersReduced,
       arrows: false,
       pagination: false,
       pauseOnHover: true,
@@ -44,106 +49,138 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const MAP_LAT = 37.422; // TODO: replace with real latitude
-  const MAP_LNG = -122.084; // TODO: replace with real longitude
-  const MAP_ADDRESS = "123 Example Street, City, STATE 12345, Country";
-  const MAP_ZOOM = 14;
+  // Location / Map (data-driven)
+  (function initLocation() {
+    const loc = document.querySelector(".location-section");
+    if (!loc) return;
 
-  const mapWrapper = document.querySelector("[data-map-wrapper]");
-  const consentBtn = document.querySelector("[data-map-consent]");
-  const mapEl = document.querySelector("[data-map]");
-  const addrEl = document.querySelector("[data-address]");
-  const copyBtn = document.querySelector("[data-copy-address]");
+    const MAP_LAT = parseFloat(loc.dataset.lat);
+    const MAP_LNG = parseFloat(loc.dataset.lng);
+    const hasCoords = !Number.isNaN(MAP_LAT) && !Number.isNaN(MAP_LNG);
 
-  if (addrEl) addrEl.textContent = MAP_ADDRESS;
+    const MAP_ADDRESS = loc.dataset.address || "";
+    const MAP_PHONE = loc.dataset.phone || "";
+    const MAP_NAME = loc.dataset.name || "Location";
+    const MAP_ZOOM = parseInt(loc.dataset.zoom || "14", 10);
 
-  if (copyBtn) {
-    copyBtn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(MAP_ADDRESS);
-        copyBtn.textContent = "Copied!";
-        setTimeout(() => (copyBtn.textContent = "Copy address"), 2500);
-      } catch {
-        copyBtn.textContent = "Failed";
-        setTimeout(() => (copyBtn.textContent = "Copy address"), 2500);
+    const addrEl = document.querySelector("[data-address]");
+    if (addrEl && MAP_ADDRESS) addrEl.textContent = MAP_ADDRESS;
+
+    const phoneLink = document.querySelector("[data-phone]");
+    if (phoneLink && MAP_PHONE) {
+      phoneLink.href = "tel:" + MAP_PHONE.replace(/[^\d+]/g, "");
+    }
+
+    const copyBtn = document.querySelector("[data-copy-address]");
+    if (copyBtn && MAP_ADDRESS) {
+      copyBtn.addEventListener("click", async () => {
+        const original = copyBtn.textContent;
+        try {
+          await navigator.clipboard.writeText(MAP_ADDRESS);
+          copyBtn.textContent = "Copied!";
+        } catch {
+          copyBtn.textContent = "Failed";
+        }
+        setTimeout(() => (copyBtn.textContent = original), 2200);
+      });
+    }
+
+    if (!hasCoords) {
+      // No coordinates: keep static placeholder only
+      const consentBtn = document.querySelector("[data-map-consent]");
+      if (consentBtn) {
+        consentBtn.removeAttribute("data-map-consent");
+        consentBtn.type = "button";
+        consentBtn.style.cursor = "default";
+        consentBtn.querySelector(".location-section__consent-text")?.remove();
       }
-    });
-  }
+      return;
+    }
 
-  function buildDirectionsLinks() {
-    const qs = encodeURIComponent(`${MAP_LAT},${MAP_LNG}`);
-    const dir = document.querySelector("[data-directions]");
-    const open = document.querySelector("[data-open]");
-    if (dir)
-      dir.href = `https://www.google.com/maps/dir/?api=1&destination=${qs}`;
-    if (open) open.href = `https://maps.google.com/?q=${qs}`;
-  }
-  buildDirectionsLinks();
-
-  function loadGoogleScript(cb) {
-    if (window.google && window.google.maps) return cb();
-    const s = document.createElement("script");
-    s.src =
-      "https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=__initMap";
-    s.async = true;
-    window.__initMap = cb;
-    document.head.appendChild(s);
-  }
-
-  function initMap() {
-    if (!mapEl || !(window.google && window.google.maps)) return;
-    mapEl.hidden = false;
-    const map = new window.google.maps.Map(mapEl, {
-      center: { lat: MAP_LAT, lng: MAP_LNG },
+    buildDirectionsLinks(MAP_LAT, MAP_LNG);
+    wireMapConsent({
+      lat: MAP_LAT,
+      lng: MAP_LNG,
       zoom: MAP_ZOOM,
-      mapId: "DEMO_MAP_ID",
-      clickableIcons: false,
+      name: MAP_NAME,
     });
-    new window.google.maps.Marker({
-      position: { lat: MAP_LAT, lng: MAP_LNG },
-      map,
-      title: "DRILL WEED SHOP",
-    });
-  }
 
-  function activateMap() {
-    if (!consentBtn || consentBtn.dataset.loaded === "1") return;
-    consentBtn.dataset.loaded = "1";
-    consentBtn.remove();
-    loadGoogleScript(initMap);
-    try {
-      localStorage.setItem("mapConsent", "1");
-    } catch (e) {
-      // Ignore quota / privacy mode errors
-      void e;
+    function buildDirectionsLinks(lat, lng) {
+      const qs = encodeURIComponent(`${lat},${lng}`);
+      const dir = document.querySelector("[data-directions]");
+      const open = document.querySelector("[data-open]");
+      if (dir)
+        dir.href = `https://www.google.com/maps/dir/?api=1&destination=${qs}`;
+      if (open) open.href = `https://maps.google.com/?q=${qs}`;
     }
-  }
 
-  if (consentBtn) {
-    consentBtn.addEventListener("click", activateMap);
-    // Auto-enable if previously consented and scrolled into view
-    const prior = (() => {
-      try {
-        return localStorage.getItem("mapConsent") === "1";
-      } catch {
-        return false;
+    function wireMapConsent(cfg) {
+      const consentBtn = document.querySelector("[data-map-consent]");
+      const mapEl = document.querySelector("[data-map]");
+      if (!consentBtn || !mapEl) return;
+
+      function loadGoogleScript(cb) {
+        if (window.google && window.google.maps) return cb();
+        const s = document.createElement("script");
+        s.src =
+          "https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=__initMap";
+        s.async = true;
+        window.__initMap = cb;
+        document.head.appendChild(s);
       }
-    })();
-    if (prior && "IntersectionObserver" in window) {
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((e) => e.isIntersecting)) {
-            activateMap();
-            io.disconnect();
-          }
-        },
-        { rootMargin: "0px 0px -20% 0px" }
-      );
-      io.observe(mapWrapper);
-    }
-  }
 
-  // Global Age Gate
+      function initMap() {
+        if (!(window.google && window.google.maps)) return;
+        mapEl.hidden = false;
+        const map = new window.google.maps.Map(mapEl, {
+          center: { lat: cfg.lat, lng: cfg.lng },
+          zoom: cfg.zoom,
+          clickableIcons: false,
+        });
+        new window.google.maps.Marker({
+          position: { lat: cfg.lat, lng: cfg.lng },
+          map,
+          title: cfg.name,
+        });
+      }
+
+      function activate() {
+        if (consentBtn.dataset.loaded === "1") return;
+        consentBtn.dataset.loaded = "1";
+        consentBtn.remove();
+        loadGoogleScript(initMap);
+        try {
+          localStorage.setItem("mapConsent", "1");
+        } catch (e) {
+          void e;
+        }
+      }
+
+      consentBtn.addEventListener("click", activate);
+
+      try {
+        if (
+          localStorage.getItem("mapConsent") === "1" &&
+          "IntersectionObserver" in window
+        ) {
+          const io = new IntersectionObserver(
+            (ents) => {
+              if (ents.some((e) => e.isIntersecting)) {
+                activate();
+                io.disconnect();
+              }
+            },
+            { rootMargin: "0px 0px -20% 0px" }
+          );
+          io.observe(consentBtn);
+        }
+      } catch (e) {
+        void e;
+      }
+    }
+  })();
+
+  // Age Gate (cookie hardening)
   (function ageGate() {
     const modal = document.getElementById("age-gate");
     if (!modal) return;
@@ -182,9 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         localStorage.setItem(KEY, String(t));
       } catch (err) {
-        void err; // ignore quota / privacy errors
+        void err;
       }
-      document.cookie = `${COOKIE}=${t};path=/;max-age=${TTL / 1000}`;
+      const attrs = `path=/;max-age=${TTL / 1000};SameSite=Lax${
+        window.location.protocol === "https:" ? ";Secure" : ""
+      }`;
+      document.cookie = `${COOKIE}=${t};${attrs}`;
     }
 
     function openModal() {

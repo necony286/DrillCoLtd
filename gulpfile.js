@@ -83,7 +83,14 @@ const styles = () =>
       postcss([
         purgecss({
           content: ["./app/**/*.html", "./app/js/**/*.js"],
-          safelist: [/^splide/, /^is-/],
+          safelist: [
+            /^splide/,
+            /^is-/,
+            "age-modal",
+            "age-modal__dialog",
+            "age-modal__btn",
+            "age-modal__actions",
+          ],
         }),
         autoprefixer(),
         cssnano(),

@@ -18,8 +18,9 @@
   transition: opacity 0.3s ease;
 
   &[hidden] {
-    display: flex;
-  } // keep layout but remain hidden for a11y
+    display: none;
+  } // ensure truly hidden
+
   &.is-open {
     opacity: 1;
     pointer-events: auto;
@@ -106,4 +107,14 @@
 body.is-locked {
   overflow: hidden;
   touch-action: none;
+}
+
+/* Reduced motion global safeguard */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
