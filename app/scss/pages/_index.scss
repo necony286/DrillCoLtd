@@ -217,6 +217,51 @@ main.main {
     @include text-typo;
   }
 
+  &__grower,
+  &__thc {
+    position: absolute;
+    padding: 0.45rem 0.85rem;
+    border-radius: 0.65rem;
+    background: rgb(0 0 0 / 60%);
+    backdrop-filter: blur(4px);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    pointer-events: none;
+
+    @include text-typo;
+  }
+
+  &__grower {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  &__thc {
+    bottom: 0.75rem;
+    right: 0.75rem;
+    transform: translateY(4px);
+  }
+
+  &__card:hover &__grower,
+  &__card:hover &__thc {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__grower,
+    &__thc {
+      transition: none;
+      transform: none;
+    }
+  }
+
   @include respond(tab-port) {
     &__card {
       width: clamp(180px, 18vw, 220px);
