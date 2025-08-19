@@ -125,7 +125,7 @@ body.is-locked {
   background: rgb(0 0 0 / 70%);
   backdrop-filter: blur(6px);
   color: #{palette($palette, typo, text)};
-  font-size: 0.9rem;
+  font-size: 0.97rem;
 
   &__inner {
     max-width: 1200px;
@@ -153,50 +153,28 @@ body.is-locked {
   &__tagline {
     @include text-typo;
 
-    font-size: 0.95rem;
+    font-size: 1rem;
     letter-spacing: 0.04em;
     opacity: 0.85;
   }
 
   &__actions {
-    display: flex;
-    flex-wrap: wrap;
+    /* CHANGED: was flex; now grid for uniform button widths */
+    display: grid;
     gap: 0.9rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     justify-content: center;
   }
 
   &__action {
-    --pad: 0.85rem;
-
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding: var(--pad) 1.2rem;
-    min-width: 44px;
-    min-height: 44px;
-    border-radius: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    background: rgb(255 255 255 / 10%);
-    color: #{palette($palette, typo, heading)};
-    transition: background 0.3s, color 0.3s, border-color 0.3s;
-
-    @include text-typo;
-
-    &:hover,
-    &:focus-visible {
-      background: #{palette($palette, primary, main)};
-      border-color: #{palette($palette, primary, main)};
-      color: #{palette($palette, typo, heading)};
-      outline: 2px solid #{palette($palette, primary, main)};
-      outline-offset: 2px;
-    }
+    /* ensure full column width + centered content */
+    width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 
   &__action-icon {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     line-height: 1;
   }
 
@@ -221,7 +199,7 @@ body.is-locked {
   &__heading {
     @include heading-typo;
 
-    font-size: 1rem;
+    font-size: 1.1rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin: 0;
@@ -255,7 +233,7 @@ body.is-locked {
   }
 
   &__mini-nav a {
-    font-size: 0.85rem;
+    font-size: 0.92rem;
     letter-spacing: 0.05em;
   }
 
@@ -266,7 +244,7 @@ body.is-locked {
     flex-direction: column;
     align-items: center;
     gap: 0.4rem;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
   }
 
   @include respond(tab-port) {
