@@ -118,3 +118,156 @@ body.is-locked {
     scroll-behavior: auto !important;
   }
 }
+
+/* Footer */
+.site-footer {
+  margin-top: val($space, section-y);
+  background: rgb(0 0 0 / 70%);
+  backdrop-filter: blur(6px);
+  color: #{palette($palette, typo, text)};
+  font-size: 0.9rem;
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.6rem 2.5rem;
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  &__brand {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  &__logo {
+    width: 70px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 4px 10px rgb(0 0 0 / 55%));
+  }
+
+  &__tagline {
+    @include text-typo;
+
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+  }
+
+  &__action {
+    --pad: 0.85rem;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: var(--pad) 1.2rem;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    background: rgb(255 255 255 / 10%);
+    color: #{palette($palette, typo, heading)};
+    transition: background 0.3s, color 0.3s, border-color 0.3s;
+
+    @include text-typo;
+
+    &:hover,
+    &:focus-visible {
+      background: #{palette($palette, primary, main)};
+      border-color: #{palette($palette, primary, main)};
+      color: #{palette($palette, typo, heading)};
+      outline: 2px solid #{palette($palette, primary, main)};
+      outline-offset: 2px;
+    }
+  }
+
+  &__action-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+
+  &__utility {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  &__heading {
+    @include heading-typo;
+
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__address,
+  &__hours {
+    font-style: normal;
+    line-height: 1.4;
+    opacity: 0.85;
+  }
+
+  &__mini-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  & a {
+    text-decoration: none;
+    color: #{palette($palette, primary, light)};
+    outline-offset: 2px;
+    transition: color 0.3s;
+  }
+
+  & a:where(:hover, :focus-visible) {
+    color: #{palette($palette, primary, main)};
+    outline: 2px solid #{palette($palette, primary, main)};
+  }
+
+  &__mini-nav a {
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+  }
+
+  &__legal a {
+    font-size: 0.75rem;
+  }
+
+  @media (width >= 800px) {
+    &__inner {
+      grid-template-columns: 1fr;
+    }
+
+    &__utility {
+      order: 2;
+    }
+
+    &__legal {
+      order: 3;
+    }
+  }
+}
