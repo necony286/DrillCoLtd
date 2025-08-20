@@ -1,22 +1,28 @@
 @use "../abstracts/all" as *;
 
 .about-page {
-  padding: 4.5rem 2rem;
+  @extend %page-section !optional;
+
+  padding-top: val($space, section-y);
   max-width: 800px;
   margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h1 {
     @include heading-typo;
 
+    margin: 0 0 val($space, lg);
     color: #{palette($palette, primary, main)};
-    margin-bottom: val($space, lg);
   }
 
   p {
     @include text-typo;
 
     line-height: 1.6;
-    margin-bottom: val($space, md);
+    margin: 0 0 val($space, md);
+    max-width: 600px;
   }
 }
-

@@ -28,13 +28,12 @@ header.header {
     max-width: var(--section-max);
     gap: 4rem;
     padding: 5rem 2rem 0;
-    margin-top: 7rem;
+    margin-top: val($space, section-y);
 
     @include respond(tab-land) {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12rem;
       gap: 5rem;
     }
   }

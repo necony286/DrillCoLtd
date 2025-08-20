@@ -50,7 +50,10 @@ html {
 body {
   @include text-typo;
 
-  min-height: 100%;
+  /* Layout declarations moved ABOVE nested @supports (fix mixed-decls) */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 
   // Fallback (single JPEG + overlay)
   background: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 55%)),
@@ -60,7 +63,6 @@ body {
   background-repeat: no-repeat;
   background-color: #000;
 
-  // Use WebP when supported (keeps overlay as first layer)
   @supports (
     background-image:
       image-set(url("../images/header-bg.webp") type("image/webp"))
@@ -74,4 +76,8 @@ body {
     background-position: center;
     background-repeat: no-repeat, repeat-y;
   }
+}
+
+main.main {
+  flex: 1 0 auto;
 }

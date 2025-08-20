@@ -258,3 +258,19 @@ body.is-locked {
     letter-spacing: 0.05em;
   }
 }
+
+/* Generic page section wrapper */
+:root {
+  --section-max: 1200px; // moved here so all pages share it
+}
+
+.page-section {
+  width: 100%;
+  max-width: var(--section-max);
+  margin: val($space, section-y) auto;
+  padding: 0 val($space, section-x);
+
+  @include respond(tab-port) {
+    padding-inline: val($space, section-x-wide);
+  }
+}
