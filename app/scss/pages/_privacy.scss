@@ -1,0 +1,22 @@
+@use "../abstracts/all" as *;
+
+.privacy-page {
+  padding: 4.5rem 2rem;
+  max-width: 800px;
+  margin-inline: auto;
+
+  h1 {
+    @include heading-typo;
+
+    color: #{palette($palette, primary, main)};
+    margin-bottom: val($space, lg);
+  }
+
+  p {
+    @include text-typo;
+
+    line-height: 1.6;
+    margin-bottom: val($space, md);
+  }
+}
+
