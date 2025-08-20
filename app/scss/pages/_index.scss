@@ -84,8 +84,8 @@ header.header {
   }
 }
 
-main.main {
-  padding: 4.5rem 2rem;
+body.page--home .main {
+  padding: 4.5rem 2rem; // original index spacing preserved
 }
 
 /* Featured strains */
