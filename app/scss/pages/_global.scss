@@ -109,7 +109,6 @@ body.is-locked {
   touch-action: none;
 }
 
-/* Reduced motion global safeguard */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
@@ -127,20 +126,74 @@ body.is-locked {
   color: #{palette($palette, typo, text)};
   font-size: 0.97rem;
 
-  &__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 1.6rem 2.5rem;
-    display: grid;
-    gap: 2.5rem;
-  }
-
   &__brand {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.8rem;
+    grid-column: 1 / -1;
+  }
+
+  &__utility {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  &__actions {
+    display: grid;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 760px;
+    margin-inline: auto;
+    grid-template-columns: 1fr;
+  }
+
+  &__legal {
+    margin-top: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    grid-column: 1 / -1;
+  }
+
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.6rem 2.5rem;
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include respond(phone-port) {
+    &__inner {
+      grid-template-columns: 1fr;
+    }
+
+    &__utility {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    &__actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @include respond(phone-land) {
+    &__actions {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @include respond(tab-port) {
+    &__actions {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
   }
 
   &__logo {
@@ -158,27 +211,6 @@ body.is-locked {
     opacity: 0.85;
   }
 
-  &__actions {
-    display: grid;
-    gap: 0.6rem;
-    width: 100%;
-    max-width: 760px;
-    margin-inline: auto;
-    grid-template-columns: 1fr;
-
-    @include respond(phone-port) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    @include respond(phone-land) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @include respond(tab-port) {
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    }
-  }
-
   &__action {
     width: 100%;
     display: inline-flex;
@@ -187,16 +219,6 @@ body.is-locked {
     text-align: center;
     padding: 0.75rem 1.1rem;
     min-height: 48px;
-  }
-
-  &__utility {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: 1fr;
-
-    @include respond(phone-port) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
   }
 
   &__block {
@@ -246,29 +268,5 @@ body.is-locked {
   &__mini-nav a {
     font-size: 0.92rem;
     letter-spacing: 0.05em;
-  }
-
-  &__legal {
-    margin-top: 1rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.8rem;
-  }
-
-  @include respond(phone-port) {
-    &__inner {
-      grid-template-columns: 1fr;
-    }
-
-    &__utility {
-      order: 2;
-    }
-
-    &__legal {
-      order: 3;
-    }
   }
 }
