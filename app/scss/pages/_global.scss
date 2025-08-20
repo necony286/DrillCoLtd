@@ -142,12 +142,12 @@ body.is-locked {
   }
 
   &__actions {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 0.6rem;
     width: 100%;
     max-width: 760px;
     margin-inline: auto;
-    grid-template-columns: 1fr;
   }
 
   &__legal {
@@ -175,24 +175,12 @@ body.is-locked {
       grid-template-columns: 1fr;
     }
 
+    &__actions {
+      flex-direction: row;
+    }
+
     &__utility {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    &__actions {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @include respond(phone-land) {
-    &__actions {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @include respond(tab-port) {
-    &__actions {
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     }
   }
 
