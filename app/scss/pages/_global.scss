@@ -159,23 +159,34 @@ body.is-locked {
   }
 
   &__actions {
-    /* CHANGED: was flex; now grid for uniform button widths */
     display: grid;
-    gap: 0.9rem;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 760px;
+    margin-inline: auto;
+    grid-template-columns: 1fr;
+
+    @include respond(phone-port) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @include respond(phone-land) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @include respond(tab-port) {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
   }
 
   &__action {
-    /* ensure full column width + centered content */
     width: 100%;
+    display: inline-flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
-  }
-
-  &__action-icon {
-    font-size: 1.25rem;
-    line-height: 1;
+    padding: 0.75rem 1.1rem;
+    min-height: 48px;
   }
 
   &__utility {
@@ -247,7 +258,7 @@ body.is-locked {
     font-size: 0.8rem;
   }
 
-  @include respond(tab-port) {
+  @include respond(phone-port) {
     &__inner {
       grid-template-columns: 1fr;
     }
