@@ -13,6 +13,7 @@
 
   h1 {
     @include heading-typo;
+    @include type-scale(h1);
 
     margin: 0 0 val($space, lg);
     color: #{palette($palette, primary, main)};
@@ -20,6 +21,7 @@
 
   p {
     @include text-typo;
+    @include type-scale(lead);
 
     line-height: 1.6;
     margin: 0 0 val($space, md);
