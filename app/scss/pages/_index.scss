@@ -238,13 +238,12 @@ body.page--home .main {
 
   &__grower {
     top: 0.75rem;
-    right: 0.75rem;
+    left: 0.75rem;
   }
 
   &__thc {
-    bottom: 0.75rem;
+    top: 0.75rem;
     right: 0.75rem;
-    transform: translateY(4px);
   }
 
   &__card:hover &__grower,
