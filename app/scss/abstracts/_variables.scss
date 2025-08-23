@@ -40,16 +40,16 @@ $palette: (
   // primary colors
   primary:
     (
-      main: #55c57a,
-      light: color.scale(#55c57a, $lightness: 25%),
-      dark: color.scale(#55c57a, $lightness: -25%),
+      main: #00aeff,
+      light: color.scale(#00aeff, $lightness: 25%),
+      dark: color.scale(#00aeff, $lightness: -25%),
     ),
   // secondary colors
   secondary:
     (
-      main: #ffb900,
-      light: color.scale(#ffb900, $lightness: 25%),
-      dark: color.scale(#ffb900, $lightness: -25%),
+      main: #55c57a,
+      light: color.scale(#55c57a, $lightness: 25%),
+      dark: color.scale(#55c57a, $lightness: -25%),
     ),
   // typography colors
   typo:
@@ -72,7 +72,7 @@ $space: (
   // unified vertical spacing between sections
   section-x: 1.6rem,
   // default horizontal padding
-  section-x-wide: 3rem // tablet+ horizontal padding,,,,,,,,
+  section-x-wide: 3rem // tablet+ horizontal padding,,,,,,,,,,
 );
 
 // TYPE SCALING
