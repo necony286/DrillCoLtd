@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.google && window.google.maps) return cb();
         const s = document.createElement("script");
         s.src =
-          "https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=__initMap";
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&callback=__initMap";
         s.async = true;
         window.__initMap = cb;
         document.head.appendChild(s);
