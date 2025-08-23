@@ -50,7 +50,7 @@ header.header {
     height: auto;
   }
 
-  .sub_heading {
+  .header__tagline {
     margin-top: 1rem;
     text-shadow: 0 1px 3px rgb(0 0 0 / 70%);
     max-width: 35rem;
@@ -208,11 +208,11 @@ body.page--home .main {
     border-radius: 0.65rem;
     background: rgb(0 0 0 / 55%);
     backdrop-filter: blur(4px);
-    font-size: 0.95rem;
     letter-spacing: 0.5px;
     line-height: 1;
     pointer-events: none;
 
+    @include fluid-font(1rem, 1.15rem);
     @include text-typo;
   }
 
@@ -223,7 +223,6 @@ body.page--home .main {
     border-radius: 0.65rem;
     background: rgb(0 0 0 / 60%);
     backdrop-filter: blur(4px);
-    font-size: 0.7rem;
     letter-spacing: 0.06em;
     line-height: 1;
     font-weight: 600;
@@ -233,6 +232,7 @@ body.page--home .main {
     transition: opacity 0.35s ease, transform 0.35s ease;
     pointer-events: none;
 
+    @include fluid-font(0.8rem, 0.9rem);
     @include text-typo;
   }
 
@@ -465,20 +465,24 @@ body.page--home .main {
   }
 
   &__headline {
-    @include text-typo;
-
     font-weight: 600;
-    font-size: 1.15rem;
     margin: 0;
+
+    @include text-typo;
+    @include fluid-font(1.15rem, 1.3rem);
   }
 
   &__body {
     /* Multi-line clamp with standard + WebKit */
+    line-height: 1.5;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
     line-clamp: 3; /* new spec syntax */
+
+    @include text-typo;
+    @include fluid-font(1rem, 1.1rem);
   }
 
   &__footer {
@@ -579,10 +583,10 @@ body.page--home .main {
   }
 
   &__address {
-    font-size: 1rem;
     line-height: 1.4;
 
     @include text-typo;
+    @include fluid-font(1rem, 1.2rem);
   }
 
   &__copy {
@@ -668,7 +672,8 @@ body.page--home .main {
     background: rgb(0 0 0 / 55%);
     padding: 0.6rem 1rem;
     border-radius: 0.6rem;
-    font-size: 0.9rem;
+
+    @include fluid-font(0.9rem, 1rem);
   }
 
   &__consent {
