@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const MAP_PHONE = loc.dataset.phone || "";
     const MAP_NAME = loc.dataset.name || "Location";
     const MAP_ZOOM = parseInt(loc.dataset.zoom || "14", 10);
+    const MAP_ID = loc.dataset.mapId || "DEMO_MAP_ID"; // NEW: map style id for vector basemap / Advanced Markers
 
     const addrEl = loc.querySelector("[data-address]"); // scoped (was document.querySelector)
     if (addrEl && MAP_ADDRESS) addrEl.textContent = MAP_ADDRESS;
@@ -103,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lng: MAP_LNG,
       zoom: MAP_ZOOM,
       name: MAP_NAME,
+      mapId: MAP_ID, // pass through
     });
 
     function buildDirectionsLinks(lat, lng) {
@@ -122,9 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
       function loadGoogleScript(cb) {
         if (window.google && window.google.maps) return cb();
         const s = document.createElement("script");
-        // Added loading=async and libraries=marker to silence warnings
-        s.src =
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&loading=async&libraries=marker&callback=__initMap";
+        s.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&v=weekly&loading=async&libraries=marker&callback=__initMap";
         s.async = true;
         s.defer = true;
         window.__initMap = cb;
@@ -139,9 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
           center: { lat: cfg.lat, lng: cfg.lng },
           zoom: cfg.zoom,
           clickableIcons: false,
+          mapId: cfg.mapId, // NEW: required for AdvancedMarkerElement
         });
 
-        // Use AdvancedMarkerElement (recommended)
         const { AdvancedMarkerElement } = window.google.maps.marker;
         new AdvancedMarkerElement({
           position: { lat: cfg.lat, lng: cfg.lng },
@@ -171,137 +171,4 @@ document.addEventListener("DOMContentLoaded", () => {
         ) {
           const io = new IntersectionObserver(
             (ents) => {
-              if (ents.some((e) => e.isIntersecting)) {
-                activate();
-                io.disconnect();
-              }
-            },
-            { rootMargin: "0px 0px -20% 0px" }
-          );
-          io.observe(consentBtn);
-        }
-      } catch (e) {
-        void e;
-      }
-    }
-  })();
-
-  // Age Gate (cookie hardening)
-  (function ageGate() {
-    const modal = document.getElementById("age-gate");
-    if (!modal) return;
-
-    const KEY = "ageGateVerifiedAt";
-    const COOKIE = "ageGate";
-    const DAYS = 7;
-    const TTL = DAYS * 86400000;
-    const now = Date.now();
-
-    const getCookie = (n) =>
-      document.cookie
-        .split(";")
-        .map((c) => c.trim())
-        .find((c) => c.startsWith(n + "="))
-        ?.split("=")[1];
-
-    const lsStamp = (() => {
-      try {
-        return localStorage.getItem(KEY);
-      } catch {
-        return null;
-      }
-    })();
-    const cookieStamp = getCookie(COOKIE);
-    const stamp = parseInt(lsStamp || cookieStamp || "0", 10);
-
-    if (stamp && now - stamp < TTL) return; // already verified
-
-    let prevFocus = document.activeElement;
-    const yesBtn = modal.querySelector("[data-age-yes]");
-    const noBtn = modal.querySelector("[data-age-no]");
-
-    function setVerified() {
-      const t = Date.now();
-      try {
-        localStorage.setItem(KEY, String(t));
-      } catch (err) {
-        void err;
-      }
-      const attrs = `path=/;max-age=${TTL / 1000};SameSite=Lax${
-        window.location.protocol === "https:" ? ";Secure" : ""
-      }`;
-      document.cookie = `${COOKIE}=${t};${attrs}`;
-    }
-
-    function openModal() {
-      modal.hidden = false;
-      modal.classList.add("is-open");
-      document.body.classList.add("is-locked");
-      requestAnimationFrame(() => (yesBtn || modal).focus());
-      trapFocus();
-    }
-
-    function closeModal() {
-      modal.classList.remove("is-open");
-      document.body.classList.remove("is-locked");
-      if (prevFocus && prevFocus.focus) prevFocus.focus();
-      setTimeout(() => {
-        modal.hidden = true;
-      }, 300);
-      releaseTrap();
-    }
-
-    yesBtn?.addEventListener("click", () => {
-      setVerified();
-      closeModal();
-    });
-
-    noBtn?.addEventListener("click", () => {
-      window.location.href = "https://www.google.com";
-    });
-
-    // Focus trap
-    let trapHandler;
-    function trapFocus() {
-      const focusables = Array.from(
-        modal.querySelectorAll(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-        )
-      ).filter((el) => !el.hasAttribute("disabled"));
-      if (!focusables.length) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      trapHandler = (e) => {
-        if (e.key !== "Tab") return;
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      };
-      document.addEventListener("keydown", trapHandler);
-    }
-    function releaseTrap() {
-      if (trapHandler) document.removeEventListener("keydown", trapHandler);
-    }
-
-    // Cross‑tab sync
-    window.addEventListener("storage", (e) => {
-      if (e.key === KEY && e.newValue) {
-        const ts = parseInt(e.newValue, 10);
-        if (
-          ts &&
-          Date.now() - ts < TTL &&
-          modal.classList.contains("is-open")
-        ) {
-          closeModal();
-        }
-      }
-    });
-
-    // Defer to next paint
-    requestAnimationFrame(openModal);
-  })();
-});
+              if
