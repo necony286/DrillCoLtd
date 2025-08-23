@@ -209,6 +209,17 @@ body.is-locked {
     min-height: 48px;
   }
 
+  &__action-icon {
+    display: inline-flex;
+    margin-right: 0.4rem;
+
+    svg {
+      width: 1.2em;
+      height: 1.2em;
+      display: block;
+    }
+  }
+
   &__block {
     display: flex;
     flex-direction: column;
