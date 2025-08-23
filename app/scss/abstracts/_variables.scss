@@ -78,25 +78,25 @@ $space: (
 // TYPE SCALING
 $type-scale: (
   h1: (
-    min: 2.8rem,
-    max: 4.2rem,
+    min: 3rem,
+    max: 4.4rem,
   ),
   h2: (
-    min: 2.2rem,
-    max: 3.2rem,
+    min: 2.4rem,
+    max: 3.4rem,
   ),
   lead: (
-    min: 1.4rem,
-    max: 2rem,
+    min: 1.5rem,
+    max: 2.1rem,
   ),
   brand: (
     // NEW: navbar logo
-    min: 1.6rem,
-    max: 2.2rem,
+    min: 1.7rem,
+    max: 2.3rem,
   ),
   nav-link: (
     // NEW: navbar links
-    min: 1.1rem,
-    max: 1.3rem,
+    min: 1.2rem,
+    max: 1.4rem,
   ),
 );
