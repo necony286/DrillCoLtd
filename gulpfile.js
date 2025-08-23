@@ -17,12 +17,13 @@ const notify = require("gulp-notify").withReporter((options, callback) => {
   require("gulp-notify")(options, callback);
 });
 const htmlmin = require("gulp-htmlmin");
+const fileinclude = require("gulp-file-include");
 const fs = require("fs");
 const path = require("path");
 const { globSync } = require("glob");
 
 const paths = {
-  html: { src: "./app/**/*.html", dest: "./build" },
+  html: { src: "./app/*.html", watch: "./app/**/*.html", dest: "./build" },
   styles: { src: "./app/scss/main.scss", dest: "./build/assets/css" },
   vendorStyles: {
     src: "./node_modules/@splidejs/splide/dist/css/splide.min.css",
@@ -70,6 +71,7 @@ const html = () =>
   gulp
     .src(paths.html.src)
     .pipe(plumber({ errorHandler }))
+    .pipe(fileinclude({ basepath: "@file" }))
     .pipe(htmlmin({ collapseWhitespace: true, removeComments: true }))
     .pipe(gulp.dest(paths.html.dest));
 
@@ -242,7 +244,7 @@ function watchFiles() {
   gulp.watch(paths.images.src, gulp.series(images, webpImages, reload));
   gulp.watch(paths.videos.src, gulp.series(videos, reload));
   gulp.watch(paths.fonts.src, gulp.series(fonts, reload));
-  gulp.watch(paths.html.src, gulp.series(html, cacheBust, reload));
+  gulp.watch(paths.html.watch, gulp.series(html, cacheBust, reload));
 }
 
 const finalNotify = (done) => {
