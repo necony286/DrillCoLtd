@@ -62,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const MAP_PHONE = loc.dataset.phone || "";
     const MAP_NAME = loc.dataset.name || "Location";
     const MAP_ZOOM = parseInt(loc.dataset.zoom || "14", 10);
+    const MAP_ID = loc.dataset.mapId || undefined;
 
     const addrEl = loc.querySelector("[data-address]"); // scoped (was document.querySelector)
     if (addrEl && MAP_ADDRESS) addrEl.textContent = MAP_ADDRESS;
@@ -103,6 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       lng: MAP_LNG,
       zoom: MAP_ZOOM,
       name: MAP_NAME,
+      mapId: MAP_ID,
     });
 
     function buildDirectionsLinks(lat, lng) {
@@ -139,6 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
           center: { lat: cfg.lat, lng: cfg.lng },
           zoom: cfg.zoom,
           clickableIcons: false,
+          ...(cfg.mapId ? { mapId: cfg.mapId } : {}), // add when provided
         });
 
         // Use AdvancedMarkerElement (recommended)
