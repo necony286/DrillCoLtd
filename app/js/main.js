@@ -122,9 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
       function loadGoogleScript(cb) {
         if (window.google && window.google.maps) return cb();
         const s = document.createElement("script");
+        // Added loading=async and libraries=marker to silence warnings
         s.src =
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&callback=__initMap";
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&loading=async&libraries=marker&callback=__initMap";
         s.async = true;
+        s.defer = true;
         window.__initMap = cb;
         document.head.appendChild(s);
       }
@@ -132,12 +134,16 @@ document.addEventListener("DOMContentLoaded", () => {
       function initMap() {
         if (!(window.google && window.google.maps)) return;
         mapEl.hidden = false;
+
         const map = new window.google.maps.Map(mapEl, {
           center: { lat: cfg.lat, lng: cfg.lng },
           zoom: cfg.zoom,
           clickableIcons: false,
         });
-        new window.google.maps.Marker({
+
+        // Use AdvancedMarkerElement (recommended)
+        const { AdvancedMarkerElement } = window.google.maps.marker;
+        new AdvancedMarkerElement({
           position: { lat: cfg.lat, lng: cfg.lng },
           map,
           title: cfg.name,
