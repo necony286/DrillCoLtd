@@ -637,8 +637,6 @@ body.page--home .main {
     &:focus-visible {
       background: #{palette($palette, primary, main)};
       color: #{palette($palette, typo, heading)};
-      outline: 2px solid #{palette($palette, primary, main)};
-      outline-offset: 2px;
     }
   }
 
