@@ -111,6 +111,7 @@ $max-vw: 1800px; // Screen max
   font-family: #{func.font(var.$font, heading, font-family)};
   font-weight: #{func.font(var.$font, heading, weight)};
   color: #{func.palette(var.$palette, typo, heading)};
+  text-transform: uppercase; // enforce uppercase on all mixin-based headings
 }
 
 @mixin text-typo {

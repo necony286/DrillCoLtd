@@ -212,8 +212,8 @@ body.page--home .main {
     line-height: 1;
     pointer-events: none;
 
-    @include fluid-font(1rem, 1.15rem);
     @include text-typo;
+    @include fluid-font(1rem, 1.15rem);
   }
 
   &__grower,
@@ -232,8 +232,8 @@ body.page--home .main {
     transition: opacity 0.35s ease, transform 0.35s ease;
     pointer-events: none;
 
-    @include fluid-font(0.8rem, 0.9rem);
     @include text-typo;
+    @include fluid-font(0.8rem, 0.9rem);
   }
 
   &__grower {
@@ -275,7 +275,7 @@ body.page--home .main {
 
 /* Contact section */
 .contact-section {
-  max-width: 600px;
+  max-width: 734px;
   margin: val($space, section-y) auto;
   padding: 0 val($space, section-x);
 
