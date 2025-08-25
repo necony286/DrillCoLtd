@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Black Runtz",
+    "img": "assets/images/strains/Black-Runtz.png",
+    "grower": "Holy Smoke",
+    "thc": "25–28%"
+  },
+  {
+    "name": "California Cocaine",
+    "img": "assets/images/strains/CaliforniaCocaine.png",
+    "grower": "Holy Smoke",
+    "thc": "25–28%"
+  },
+  {
+    "name": "Gorilla Glue #4",
+    "img": "assets/images/strains/Gorilla-Glue4.png",
+    "grower": "Holy Smoke",
+    "thc": "25–28%"
+  },
+  {
+    "name": "Ice Cream Cake",
+    "img": "assets/images/strains/Ice-Cream-Cake.png",
+    "grower": "Holy Smoke",
+    "thc": "25–28%"
+  },
+  {
+    "name": "OreoZ",
+    "img": "assets/images/strains/OreoZ.png",
+    "grower": "Holy Smoke",
+    "thc": "25–28%"
+  },
+  {
+    "name": "Super Boof",
+    "img": "assets/images/strains/Super-Boof.png",
+    "grower": "Holy Smoke",
+    "thc": "25–28%"
+  }
+]
