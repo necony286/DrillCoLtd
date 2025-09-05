@@ -160,24 +160,6 @@ This ensures that the live website is always up-to-date with the latest changes 
     └── contact.html
 ```
 
----
-
-## 🌐 Network Troubleshooting
-
-When operating behind a proxy, configure npm or environment variables so it can reach external registries.
-
-```bash
-export HTTP_PROXY=http://your.proxy:8080
-export HTTPS_PROXY=http://your.proxy:8080
-# or
-npm config set proxy http://your.proxy:8080
-npm config set https-proxy http://your.proxy:8080
-```
-
-If network access is restricted, `npm install` may fail with `ECONNRESET`.
-
----
-
 ## 📜 License
 
 This project is proprietary. All rights reserved. See the [LICENSE](LICENSE) file for details.
