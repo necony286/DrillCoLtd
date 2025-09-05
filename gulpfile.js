@@ -29,7 +29,10 @@ const paths = {
     src: "./node_modules/@splidejs/splide/dist/css/splide.min.css",
     dest: "./build/assets/css",
   },
-  scripts: { src: ["./app/js/*.js", "!./app/js/gtag.js"], dest: "./build/assets/js" },
+  scripts: {
+    src: ["./app/js/*.js", "!./app/js/gtag.js"],
+    dest: "./build/assets/js",
+  },
   analytics: { src: "./app/js/gtag.js", dest: "./build/assets/js" },
   vendors: {
     src: [
@@ -211,21 +214,23 @@ const webpImages = async (done) => {
   done();
 };
 
-const createCopyTask = (taskName, pathsConfig) => (done) => {
-  const sourceFiles = globSync(pathsConfig.src);
-  if (sourceFiles.length === 0) {
-    return done();
-  }
-  const destDir = pathsConfig.dest;
-  if (!fs.existsSync(destDir)) {
-    fs.mkdirSync(destDir, { recursive: true });
-  }
-  sourceFiles.forEach((file) => {
-    const destPath = path.join(destDir, path.basename(file));
-    fs.copyFileSync(file, destPath);
-  });
-  console.log(`Copied ${sourceFiles.length} ${taskName}.`);
-  done();
+const createCopyTask = (taskName, pathsConfig) => {
+  const task = (done) => {
+    const sourceFiles = globSync(pathsConfig.src);
+    if (sourceFiles.length === 0) return done();
+
+    const destDir = pathsConfig.dest;
+    if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+
+    sourceFiles.forEach((file) => {
+      const destPath = path.join(destDir, path.basename(file));
+      fs.copyFileSync(file, destPath);
+    });
+    console.log(`Copied ${sourceFiles.length} ${taskName}.`);
+    done();
+  };
+  task.displayName = taskName; // add a readable name for Gulp logs
+  return task;
 };
 
 const videos = createCopyTask("videos", paths.videos);
