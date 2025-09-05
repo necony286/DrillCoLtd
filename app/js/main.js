@@ -2,6 +2,11 @@
 /* global Splide */ // removed unused 'google'
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize image lightbox when available
+  if (window.GLightbox) {
+    window.GLightbox({ selector: ".glightbox" });
+  }
+
   // Pause autoplay if user prefers reduced motion
   const prefersReduced = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
