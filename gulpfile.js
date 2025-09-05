@@ -29,7 +29,8 @@ const paths = {
     src: "./node_modules/@splidejs/splide/dist/css/splide.min.css",
     dest: "./build/assets/css",
   },
-  scripts: { src: "./app/js/*.js", dest: "./build/assets/js" },
+  scripts: { src: ["./app/js/*.js", "!./app/js/gtag.js"], dest: "./build/assets/js" },
+  analytics: { src: "./app/js/gtag.js", dest: "./build/assets/js" },
   vendors: {
     src: [
       "./node_modules/@splidejs/splide/dist/js/splide.min.js",
@@ -113,6 +114,15 @@ const scripts = () =>
     .pipe(concat("app.min.js"))
     .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(paths.scripts.dest));
+
+const analytics = () =>
+  gulp
+    .src(paths.analytics.src)
+    .pipe(plumber({ errorHandler }))
+    .pipe(babel({ presets: ["@babel/preset-env"] }))
+    .pipe(terser())
+    .pipe(rename({ basename: "gtag", suffix: ".min" }))
+    .pipe(gulp.dest(paths.analytics.dest));
 
 const vendors = () =>
   gulp
@@ -241,6 +251,7 @@ function watchFiles() {
   gulp.watch(paths.vendors.src, gulp.series(vendors, reload));
   gulp.watch(paths.favicon.src, gulp.series(favicon, reload));
   gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
+  gulp.watch(paths.analytics.src, gulp.series(analytics, reload));
   gulp.watch(paths.images.src, gulp.series(images, webpImages, reload));
   gulp.watch(paths.videos.src, gulp.series(videos, reload));
   gulp.watch(paths.fonts.src, gulp.series(fonts, reload));
@@ -264,6 +275,7 @@ const build = gulp.series(
     styles,
     vendors,
     scripts,
+    analytics,
     images,
     webpImages,
     videos,
@@ -279,6 +291,7 @@ const watch = gulp.series(build, watchFiles);
 exports.clean = clean;
 exports.styles = styles;
 exports.scripts = scripts;
+exports.analytics = analytics;
 exports.vendors = vendors;
 exports.images = images;
 exports.webpImages = webpImages;
