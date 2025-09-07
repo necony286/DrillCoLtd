@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const MAP_PHONE = loc.dataset.phone || "";
     const MAP_NAME = loc.dataset.name || "Location";
     const MAP_ZOOM = parseInt(loc.dataset.zoom || "14", 10);
-    const MAP_ID = loc.dataset.mapId || undefined;
+    const MAP_ID = loc.dataset.mapId || "98f0e4b52a73c32bc7347941"; // default Map ID
 
     const addrEl = loc.querySelector("[data-address]"); // scoped (was document.querySelector)
     if (addrEl && MAP_ADDRESS) addrEl.textContent = MAP_ADDRESS;
@@ -129,9 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
       function loadGoogleScript(cb) {
         if (window.google && window.google.maps) return cb();
         const s = document.createElement("script");
-        // Added loading=async and libraries=marker to silence warnings
         s.src =
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&loading=async&libraries=marker&callback=__initMap";
+          "https://maps.googleapis.com/maps/api/js?key=AIzaSyAYbz3sEBRLZA6InOq9dVJ8ngKKbALPNCc&v=weekly&loading=async&libraries=marker&callback=__initMap"; // add v=weekly
         s.async = true;
         s.defer = true;
         window.__initMap = cb;
