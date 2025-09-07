@@ -1,5 +1,5 @@
 // Main application scripts
-/* global Splide */ // removed unused 'google'
+/* global Splide, grecaptcha */ // removed unused 'google'
 
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize image lightbox when available
@@ -310,5 +310,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Defer to next paint
     requestAnimationFrame(openModal);
+  })();
+
+  // reCAPTCHA v3 for signup form
+  (function initRecaptcha() {
+    const form = document.querySelector('.contact-form');
+    const SITE_KEY = '6LcmKsArAAAAAJcDqZgKKDDO686aXovwmmMhFck_';
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      if (!window.grecaptcha) return;
+      e.preventDefault();
+      grecaptcha.ready(() => {
+        grecaptcha
+          .execute(SITE_KEY, { action: 'contact' })
+          .then((token) => {
+            const input = form.querySelector('[name="g-recaptcha-response"]');
+            if (input) {
+              input.value = token;
+            }
+            form.submit();
+          });
+      });
+    });
   })();
 });
